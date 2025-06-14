@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry Trends & Market Research: The Cost of Custom AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F4F8; /* Light Blue-Gray Background from "Brilliant Blues" inspiration */
+            color: #1E293B; /* Dark Slate for primary text */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; 
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Base height */
+            max-height: 400px; /* Max height to prevent overflow */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .chart-container {
+                height: 350px; /* Taller on medium screens */
+            }
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-md */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1); /* shadow-lg */
+        }
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem; /* Space for the line and dots */
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem; /* Aligns with the center of the dot */
+            top: 0;
+            bottom: 0;
+            width: 4px; /* Thickness of the line */
+            background-color: #BFDBFE; /* Light blue from palette */
+        }
+        .timeline-item {
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem; /* (Dot width + space) to align left of the line */
+            top: 0; /* Align with the top of the text content */
+            width: 1.5rem; /* Dot size */
+            height: 1.5rem; /* Dot size */
+            border-radius: 9999px; /* Make it a circle */
+            background-color: #3B82F6; /* Main blue from palette */
+            border: 4px solid #BFDBFE; /* Border to make it pop */
+            z-index: 10;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 30; /* Ensure it's above other content */
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- 
+    Infographic Narrative Plan:
+    1.  Hook/Overview: Striking headline stat (Overall Custom AI Cost Range).
+    2.  Cost Breakdown: Pie/Doughnut chart showing where the money goes (Development, Data, Integration etc.).
+    3.  Talent Costs: Bar chart comparing salaries for key AI roles (AI Engineer, ML Engineer, Data Scientist - Entry, Mid, Senior).
+    4.  Development Journey/Phases: Timeline visualization (PoC -> MVP -> Full Scale) with cost ranges per phase.
+    5.  Total Cost of Ownership (TCO): Cards/Icons for Maintenance, Infrastructure, Support.
+    6.  Global Talent Market Comparison: Bar chart showing illustrative hourly rates by region.
+    7.  Conclusion/Footer: Disclaimer.
+
+    Visualization Choices & Justifications (No SVG, No Mermaid):
+    -   Overall Cost Range (Inform): Single Big Number (Large Text).
+    -   Cost Breakdown (Compare/Composition): Doughnut Chart (Chart.js Canvas) - Good for parts of a whole.
+    -   Talent Salaries (Compare): Horizontal Bar Chart (Chart.js Canvas) - Good for comparing categories, handles long labels well on Y-axis.
+    -   Development Journey (Organize/Change): Timeline (HTML/CSS with Tailwind) - Shows distinct events/phases in sequence.
+    -   TCO Components (Inform/Organize): Cards with Unicode Icons & Text (HTML/CSS with Tailwind) - Simple way to present distinct components.
+    -   Global Hourly Rates (Compare): Horizontal Bar Chart (Chart.js Canvas) - Good for comparing categories (regions).
+    -->
+
+    <nav class="sticky-nav bg-white/80 backdrop-blur-lg shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-center h-16 space-x-4 md:space-x-8 overflow-x-auto whitespace-nowrap">
+                <a href="#overview" class="text-sm md:text-base font-medium text-gray-600 hover:text-blue-600 transition">Overview</a>
+                <a href="#breakdown" class="text-sm md:text-base font-medium text-gray-600 hover:text-blue-600 transition">Cost Breakdown</a>
+                <a href="#talent" class="text-sm md:text-base font-medium text-gray-600 hover:text-blue-600 transition">Talent Costs</a>
+                <a href="#journey" class="text-sm md:text-base font-medium text-gray-600 hover:text-blue-600 transition">Development Journey</a>
+                <a href="#tco" class="text-sm md:text-base font-medium text-gray-600 hover:text-blue-600 transition">TCO</a>
+                <a href="#rates" class="text-sm md:text-base font-medium text-gray-600 hover:text-blue-600 transition">Global Rates</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="overview" class="text-center py-12 md:py-20">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-blue-800 tracking-tight" style="color: #00449E;">The True Cost of Custom AI</h1>
+            <p class="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-gray-600">An analysis of the investment required to build, deploy, and maintain a sophisticated, multi-modal AI solution for specialized enterprise needs.</p>
+            <div class="mt-12">
+                <div class="stat-card inline-block">
+                    <p class="text-lg font-medium text-gray-500">Full-Scale Enterprise Solution</p>
+                    <p class="text-5xl md:text-7xl font-bold text-blue-600 mt-2" style="color: #0077D8;">$750K - $2M+</p>
+                    <p class="mt-3 text-sm text-gray-500">Initial Development & Setup</p>
+                </div>
+            </div>
+            <p class="mt-8 max-w-4xl mx-auto text-base text-gray-500">This initial investment reflects the high complexity of creating an AI that integrates voice, image, and call support, trained on specialized data for unique industries. Costs are driven by data acquisition, model development, and deep system integration. The range is broad due to varying scopes, data needs, and desired system sophistication.</p>
+        </section>
+
+        <section id="breakdown" class="py-12 md:py-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800" style="color: #00449E;">Where Does the Money Go?</h2>
+            <p class="mt-3 text-lg text-center max-w-2xl mx-auto text-gray-600">The budget for a custom AI project is allocated across several critical phases. Model development and data preparation represent the largest shares, highlighting their importance in building a truly custom and effective intelligent solution.</p>
+            <div class="mt-10">
+                <div class="stat-card">
+                    <div class="chart-container h-72 md:h-96">
+                        <canvas id="costBreakdownChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-4">Typical budget allocation for an AI project lifecycle. Data-centric phases (preparation and modeling) often consume over half of the initial investment, underscoring the "data is king" mantra in AI development.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="talent" class="py-12 md:py-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800" style="color: #00449E;">Building the Team: The Cost of Expertise</h2>
+            <p class="mt-3 text-lg text-center max-w-2xl mx-auto text-gray-600">The success of an AI project hinges on the expertise of its development team. Salaries for skilled AI professionals vary significantly by role and experience, representing a major component of the project's cost. These figures are indicative for the US market.</p>
+            <div class="mt-10 stat-card">
+                <h3 class="font-semibold text-xl text-gray-700 mb-4 text-center" style="color: #0077D8;">Typical Annual Salaries (USD)</h3>
+                <div class="chart-container h-96 md:h-[500px]">
+                    <canvas id="talentCostChart"></canvas>
+                </div>
+                 <p class="text-center text-sm text-gray-500 mt-4">Salary ranges for key AI roles in the US. Senior and lead positions command premium salaries due to the high demand for specialized skills, strategic experience, and the ability to lead complex projects to fruition.</p>
+            </div>
+        </section>
+
+        <section id="journey" class="py-12 md:py-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800" style="color: #00449E;">The Development Journey: A Phased Approach</h2>
+            <p class="mt-3 text-lg text-center max-w-2xl mx-auto text-gray-600">Complex AI projects are best executed in phases to mitigate risk, manage budgets effectively, and ensure continuous alignment with evolving business goals. This iterative journey progresses from a small-scale validation to a full enterprise solution.</p>
+            <div class="mt-12 max-w-4xl mx-auto">
+                <div class="timeline">
+                    <div class="timeline-item pb-12">
+                        <h3 class="text-xl font-bold" style="color: #0077D8;">Phase 1: Proof of Concept (PoC)</h3>
+                        <p class="mt-1 font-semibold text-gray-800">Cost: $10,000 - $50,000+</p>
+                        <p class="mt-2 text-gray-600">Focus: Validate a core technical assumption or a high-risk element with minimal features. Goal: Answer "Is this technically feasible and valuable?" without building a full product. Typically involves 1-3 months.</p>
+                    </div>
+                    <div class="timeline-item pb-12">
+                        <h3 class="text-xl font-bold" style="color: #0077D8;">Phase 2: Minimum Viable Product (MVP)</h3>
+                        <p class="mt-1 font-semibold text-gray-800">Cost: $60,000 - $250,000+</p>
+                        <p class="mt-2 text-gray-600">Focus: Develop the first functional version of the AI with a core set of features to provide tangible value to a specific user group. Goal: Gather early user feedback for iterative improvement. Typically involves 3-9 months.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold" style="color: #0077D8;">Phase 3: Full-Scale Enterprise Solution</h3>
+                        <p class="mt-1 font-semibold text-gray-800">Cost: $750,000 - $2,000,000+</p>
+                        <p class="mt-2 text-gray-600">Focus: Build the comprehensive, production-ready solution with all features, deep integration, extensive custom data training, and robust scalability, security, and performance. Goal: Deliver a transformative AI capability. Typically involves 12-24+ months.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tco" class="py-12 md:py-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800" style="color: #00449E;">Beyond the Build: Total Cost of Ownership (TCO)</h2>
+             <p class="mt-3 text-lg text-center max-w-2xl mx-auto text-gray-600">The initial development investment is just the beginning. Ongoing operational costs for maintenance, infrastructure, model retraining, and support are crucial for the AI's long-term success, relevance, and continuous value delivery.</p>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+                 <div class="stat-card text-center">
+                    <div class="text-5xl" style="color: #4196E8;">⚙️</div>
+                    <h3 class="font-bold text-xl mt-3 text-gray-700">Maintenance & Retraining</h3>
+                    <p class="mt-2 text-gray-600">Budget 15-30% of the initial development cost annually. This covers bug fixes, performance tuning, security updates, and crucial model retraining as data patterns evolve and to prevent model drift.</p>
+                 </div>
+                 <div class="stat-card text-center">
+                    <div class="text-5xl" style="color: #4196E8;">☁️</div>
+                     <h3 class="font-bold text-xl mt-3 text-gray-700">Infrastructure & APIs</h3>
+                    <p class="mt-2 text-gray-600">Ongoing fees for cloud hosting (servers, storage, databases), computing resources (especially GPUs for training/inference), and usage of any third-party AI APIs (e.g., specialized voice or image services).</p>
+                 </div>
+                <div class="stat-card text-center">
+                    <div class="text-5xl" style="color: #4196E8;">🛡️</div>
+                    <h3 class="font-bold text-xl mt-3 text-gray-700">Support & Security</h3>
+                    <p class="mt-2 text-gray-600">Costs for dedicated technical support teams, monitoring tools for system health and performance, and continuous security measures to protect sensitive data and ensure system integrity against threats.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rates" class="py-12 md:py-16">
+            <h2 class="text-3xl font-bold text-center text-gray-800" style="color: #00449E;">The Global Talent Market: Regional Rate Variations</h2>
+            <p class="mt-3 text-lg text-center max-w-2xl mx-auto text-gray-600">The cost of AI talent varies significantly across the globe. While lower hourly rates in some regions can be attractive for budget optimization, it's crucial to balance this with factors like experience, communication clarity, time zone differences, and overall project management complexity.</p>
+            <div class="mt-10 stat-card">
+                 <h3 class="font-semibold text-xl text-gray-700 mb-4 text-center" style="color: #0077D8;">Average Hourly Rates for Mid-Level AI Engineers (USD)</h3>
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="regionalRatesChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-gray-500 mt-4">Illustrative rates show a wide range. North America and Western Europe typically command the highest prices for experienced AI talent, reflecting high demand and cost of living. Other regions can offer more competitive rates, but thorough vetting is essential.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16" style="background-color: #1E293B;">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-base text-gray-400">This infographic presents synthesized data and insights based on typical industry trends for custom AI development. All figures are illustrative and intended for market research and strategic planning purposes. Actual costs can vary significantly based on project specifics.</p>
+            <p class="mt-2 text-sm text-gray-500">&copy; 2025 Industry Trends & Market Research. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chosen Palette: Brilliant Blues
+        const brilliantBlues = ['#00449E', '#0077D8', '#4196E8', '#87B8F4', '#BFDBFE'];
+        const brilliantBluesHalfOpacity = ['rgba(0, 68, 158, 0.7)', 'rgba(0, 119, 216, 0.7)', 'rgba(65, 150, 232, 0.7)', 'rgba(135, 184, 244, 0.7)', 'rgba(191, 219, 254, 0.7)'];
+
+        function processLongLabels(labels, maxLength = 16) {
+            return labels.map(label => {
+                if (typeof label === 'string' && label.length > maxLength) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    words.forEach(word => {
+                        if ((currentLine + ' ' + word).trim().length > maxLength && currentLine.length > 0) {
+                            lines.push(currentLine);
+                            currentLine = word;
+                        } else {
+                            currentLine = currentLine ? currentLine + ' ' + word : word;
+                        }
+                    });
+                    lines.push(currentLine);
+                    return lines;
+                }
+                return label;
+            });
+        }
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: '#374151' // text-gray-700
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#4B5563' }, // text-gray-600
+                    grid: { color: '#E5E7EB' }  // bg-gray-200
+                },
+                x: {
+                    ticks: { color: '#4B5563' }, // text-gray-600
+                    grid: { display: false }
+                }
+            }
+        };
+        
+        const costBreakdownChartEl = document.getElementById('costBreakdownChart');
+        if (costBreakdownChartEl) {
+            const costBreakdownData = {
+                labels: processLongLabels(['Model Development & Training', 'Data Acquisition & Preparation', 'Integration & Deployment', 'Testing & QA', 'Discovery & Planning', 'Project Management']),
+                datasets: [{
+                    label: 'Cost Breakdown (%)',
+                    data: [30, 25, 20, 10, 10, 5], // Sums to 100
+                    backgroundColor: [brilliantBlues[0], brilliantBlues[1], brilliantBlues[2], brilliantBlues[3], brilliantBlues[4], '#A0AEC0'], // Added a gray for the last one
+                    borderColor: '#FFFFFF',
+                    borderWidth: 2,
+                    hoverOffset: 8
+                }]
+            };
+            new Chart(costBreakdownChartEl, {
+                type: 'doughnut',
+                data: costBreakdownData,
+                options: {
+                    ...commonChartOptions,
+                    plugins: {
+                        ...commonChartOptions.plugins,
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: '#374151',
+                                boxWidth: 15,
+                                padding: 15
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        const talentCostChartEl = document.getElementById('talentCostChart');
+        if (talentCostChartEl) {
+            const talentCostData = {
+                labels: processLongLabels(['AI Engineer', 'Machine Learning Engineer', 'Data Scientist', 'AI Research Scientist']),
+                datasets: [
+                    {
+                        label: 'Entry-Level ($)',
+                        data: [100000, 95000, 90000, 110000],
+                        backgroundColor: brilliantBluesHalfOpacity[3],
+                        borderColor: brilliantBlues[3],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Mid-Level ($)',
+                        data: [150000, 142500, 135000, 160000],
+                        backgroundColor: brilliantBluesHalfOpacity[1],
+                        borderColor: brilliantBlues[1],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Senior/Lead ($)',
+                        data: [210000, 200000, 185000, 220000],
+                        backgroundColor: brilliantBluesHalfOpacity[0],
+                        borderColor: brilliantBlues[0],
+                        borderWidth: 1
+                    }
+                ]
+            };
+            new Chart(talentCostChartEl, {
+                type: 'bar',
+                data: talentCostData,
+                options: { 
+                    ...commonChartOptions,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000) + 'k';
+                                },
+                                color: '#4B5563'
+                            },
+                            grid: { color: '#E5E7EB' }
+                        },
+                        y: {
+                            ticks: { color: '#4B5563' },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        const regionalRatesChartEl = document.getElementById('regionalRatesChart');
+        if (regionalRatesChartEl) {
+            const regionalRatesData = {
+                labels: processLongLabels(['North America (US/Canada)', 'Western Europe (UK/Germany)', 'Eastern Europe (Poland/Ukraine)', 'Latin America (Brazil/Mexico)', 'South Asia (India/Pakistan)', 'Southeast Asia (Vietnam/Philippines)']),
+                datasets: [{
+                    label: 'Average Hourly Rate ($)',
+                    data: [140, 105, 60, 55, 40, 35],
+                    backgroundColor: brilliantBluesHalfOpacity[1],
+                    borderColor: brilliantBlues[1],
+                    borderWidth: 1
+                }]
+            };
+            new Chart(regionalRatesChartEl, {
+                type: 'bar',
+                data: regionalRatesData,
+                options: { 
+                    ...commonChartOptions,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value;
+                                },
+                                color: '#4B5563'
+                            },
+                            grid: { color: '#E5E7EB' }
+                        },
+                        y: {
+                            ticks: { color: '#4B5563' },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

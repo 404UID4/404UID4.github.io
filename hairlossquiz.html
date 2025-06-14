@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Hair Loss Self-Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .quiz-container {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .question-card {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            will-change: transform, opacity;
+        }
+        .question-card.exiting {
+            transform: translateX(-100%);
+            opacity: 0;
+            position: absolute;
+        }
+        .question-card.entering {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        .option-btn {
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .option-btn.selected {
+            background-color: #4f46e5;
+            border-color: #4f46e5;
+            color: white;
+        }
+        .progress-bar-inner {
+            transition: width 0.5s ease-in-out;
+        }
+        #results-container {
+            display: none;
+        }
+        .result-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s forwards;
+        }
+        .result-bar-inner {
+            transition: width 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 24px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="quiz-container" class="quiz-container max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">Hair Health Self-Assessment</h1>
+            <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">This tool is designed to help you understand potential factors related to hair loss based on recent research. Your answers will provide personalized insights to guide a conversation with a healthcare professional.</p>
+             <p class="text-sm text-red-600 mb-8 max-w-2xl mx-auto"><strong>Disclaimer:</strong> This is not a medical diagnosis. Consult with a qualified dermatologist for an accurate diagnosis and treatment plan.</p>
+            <button id="start-quiz-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-indigo-700 transition-transform transform hover:scale-105">
+                Begin Assessment
+            </button>
+        </div>
+
+        <!-- Quiz Questions -->
+        <div id="quiz-proper" class="hidden">
+            <div id="progress-bar-container" class="w-full bg-gray-200 rounded-full h-2.5 mb-8 shadow-inner">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full progress-bar-inner" style="width: 0%"></div>
+            </div>
+            <div id="question-container" class="relative min-h-[300px]">
+                <!-- Question cards will be injected here -->
+            </div>
+             <div class="mt-8 flex justify-between">
+                <button id="prev-btn" class="bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>Previous</button>
+                <button id="next-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>Next</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Results -->
+    <div id="results-container" class="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-center mb-2 text-gray-800">Your Personalized Insights</h1>
+        <p class="text-center text-gray-600 mb-8">Based on your responses, here are the potential primary factors contributing to your hair loss. This information is for educational purposes to help you have a more productive conversation with your doctor.</p>
+        <div id="results-content" class="space-y-6">
+            <!-- Results will be injected here -->
+        </div>
+        <div class="text-center mt-12">
+            <button id="retake-quiz-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-indigo-700 transition-transform transform hover:scale-105">
+                Retake Assessment
+            </button>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close-button">&times;</span>
+            <h3 id="modalTitle" class="text-xl font-bold mb-2 text-indigo-700"></h3>
+            <p id="modalText" class="text-gray-700"></p>
+        </div>
+    </div>
+
+
+    <script>
+        const quizData = [
+            {
+                question: "How would you describe the onset of your hair loss?",
+                options: [
+                    { text: "Sudden and dramatic, with a lot of shedding at once.", points: { TE: 5, AA: 3 } },
+                    { text: "Gradual thinning that I've noticed over months or years.", points: { FPHL: 5 } },
+                    { text: "It seems to come and go in distinct patches.", points: { AA: 5, LPP_FFA: 2 } }
+                ],
+                info: {
+                    title: "Onset of Hair Loss",
+                    text: "A sudden onset is characteristic of Telogen Effluvium (TE), often triggered by a stressor 2-4 months prior. Gradual thinning is the hallmark of Androgenetic Alopecia (FPHL). Patchy loss is classic for Alopecia Areata (AA)."
+                }
+            },
+            {
+                question: "Where on your scalp is the hair loss most noticeable?",
+                options: [
+                    { text: "A widening of my part line or general thinning on top.", points: { FPHL: 5 } },
+                    { text: "Distinct, round/oval smooth bald patches.", points: { AA: 5 } },
+                    { text: "A receding hairline, especially at the front and temples.", points: { LPP_FFA: 5 } },
+                    { text: "Diffuse shedding all over my scalp, without a clear pattern.", points: { TE: 5, Nutrient: 2 } }
+                ],
+                 info: {
+                    title: "Pattern of Hair Loss",
+                    text: "FPHL typically presents with a 'Christmas tree' pattern or widening part, sparing the frontal hairline. AA is known for well-demarcated patches. Frontal Fibrosing Alopecia (FFA), a type of scarring alopecia, characteristically causes hairline recession."
+                }
+            },
+            {
+                question: "Are you experiencing any scalp symptoms like itching, burning, pain, or significant scaling?",
+                options: [
+                    { text: "Yes, my scalp is often itchy, burning, or painful.", points: { LPP_FFA: 5, AA: 1 } },
+                    { text: "I have some dandruff/scaling, but no significant pain or itching.", points: {} },
+                    { text: "No, my scalp feels completely normal.", points: { FPHL: 2, TE: 2 } }
+                ],
+                 info: {
+                    title: "Scalp Symptoms",
+                    text: "The presence of significant symptoms like pain or burning strongly suggests an inflammatory process, characteristic of scarring alopecias like Lichen Planopilaris (LPP). FPHL and TE are typically asymptomatic."
+                }
+            },
+            {
+                question: "Have you noticed hair loss on other parts of your body, such as your eyebrows or eyelashes?",
+                options: [
+                    { text: "Yes, my eyebrows and/or eyelashes are noticeably thinner.", points: { LPP_FFA: 5, AA: 3 } },
+                    { text: "Yes, I've noticed thinning on my limbs or other body areas.", points: { LPP_FFA: 3, AA: 2 } },
+                    { text: "No, the hair loss is only on my scalp.", points: { FPHL: 1, TE: 1 } }
+                ],
+                info: {
+                    title: "Body Hair Loss",
+                    text: "Loss of eyebrow and eyelash hair is a hallmark feature of Frontal Fibrosing Alopecia (FFA) and can also occur in severe Alopecia Areata (AA)."
+                }
+            },
+            {
+                question: "In the 3-6 months before your hair loss began, did you experience any of the following? (Select all that apply)",
+                type: 'multiple',
+                options: [
+                    { text: "A major surgery, high fever, severe illness, or significant emotional stress.", points: { TE: 5 } },
+                    { text: "Rapid weight loss or started a very restrictive diet.", points: { TE: 5, Nutrient: 3 } },
+                    { text: "Started or stopped a new medication (e.g., antidepressants, beta-blockers, GLP-1 agonists).", points: { TE: 4 } },
+                    { text: "None of the above apply to me.", points: { FPHL: 2, AA: 1 } }
+                ],
+                 info: {
+                    title: "Potential Triggers for TE",
+                    text: "Telogen Effluvium (TE) is a reactive hair loss triggered by a significant physiological or emotional 'shock to the system.' The shedding typically occurs 2-4 months after the triggering event."
+                }
+            },
+            {
+                question: "Do you have a close family history of significant hair loss (in men or women)?",
+                options: [
+                    { text: "Yes, multiple close relatives have noticeable hair thinning.", points: { FPHL: 5 } },
+                    { text: "One or two relatives have some hair loss.", points: { FPHL: 2 } },
+                    { text: "No, not that I'm aware of.", points: { TE: 1, AA: 1, LPP_FFA: 1 } }
+                ],
+                info: {
+                    title: "Family History",
+                    text: "Androgenetic Alopecia (FPHL) is a genetically determined disorder. A strong family history is a powerful indicator for this diagnosis."
+                }
+            },
+            {
+                question: "Have you been diagnosed with an autoimmune condition (like thyroid disease, lupus, vitiligo) or a thyroid disorder?",
+                options: [
+                    { text: "Yes, I have a diagnosed autoimmune or thyroid condition.", points: { AA: 4, LPP_FFA: 4, TE: 2 } },
+                    { text: "I suspect I might have a thyroid issue but am undiagnosed.", points: { TE: 3, AA: 2, LPP_FFA: 2 } },
+                    { text: "No, I have no history of these conditions.", points: { FPHL: 1 } }
+                ],
+                 info: {
+                    title: "Medical History",
+                    text: "Alopecia Areata (AA) and Lichen Planopilaris (LPP/FFA) are autoimmune conditions often associated with other autoimmune diseases, particularly thyroid disorders. Thyroid dysfunction itself is also a common cause of Telogen Effluvium."
+                }
+            },
+             {
+                question: "Do you use harsh chemical treatments (like bleach, relaxers) or frequently wear tight hairstyles (like tight buns or braids)?",
+                options: [
+                    { text: "Yes, frequently.", points: { Traction: 5 } },
+                    { text: "Occasionally.", points: { Traction: 2 } },
+                    { text: "No, never.", points: {} }
+                ],
+                info: {
+                    title: "Hair Care Practices",
+                    text: "Constant pulling force on the hair follicles from tight hairstyles can lead to a type of hair loss called Traction Alopecia. Harsh chemicals can also cause hair breakage and damage."
+                }
+            }
+        ];
+
+        const resultsMap = {
+            FPHL: {
+                name: "Androgenetic Alopecia (FPHL)",
+                description: "This is the most common cause of hair loss in women, often called Female Pattern Hair Loss. It's a genetic condition characterized by a gradual thinning of hair, typically on the top of the scalp, due to hair follicles shrinking over time. It is generally not associated with scalp symptoms like itching or pain.",
+                evidence: "Your answers suggesting a gradual onset, a pattern of thinning at the part line or crown, and a family history are strong indicators for FPHL.",
+                nextSteps: "A dermatologist can confirm this with a scalp examination (trichoscopy). The most common evidence-based treatments include topical minoxidil (FDA-approved), and off-label oral medications like spironolactone or finasteride (for post-menopausal women)."
+            },
+            TE: {
+                name: "Telogen Effluvium (TE)",
+                description: "This condition involves a widespread, sudden shedding of hair. It is a reactive process, usually triggered by a significant physical or emotional stressor (like a major illness, surgery, or high stress) that occurred 2-4 months before the shedding started. It is typically temporary.",
+                evidence: "Your responses indicating a sudden, diffuse shedding, especially if preceded by a significant life event or medication change, point strongly towards TE.",
+                nextSteps: "The primary management is to identify and address the underlying trigger. Blood tests for thyroid function and nutritional deficiencies (like iron) are crucial. The condition usually resolves on its own over 6-9 months once the trigger is removed. Topical minoxidil can help speed up regrowth."
+            },
+            AA: {
+                name: "Alopecia Areata (AA)",
+                description: "This is an autoimmune disease where the body's immune system mistakenly attacks hair follicles, leading to rapid, non-scarring hair loss. It often presents as smooth, round bald patches on the scalp or elsewhere on the body. It can be associated with other autoimmune conditions.",
+                evidence: "The presence of distinct bald patches, a sudden onset, and a potential personal or family history of autoimmune disease are key indicators for AA.",
+                nextSteps: "Diagnosis is often clinical, but a dermatologist may perform a scalp biopsy. Treatment depends on severity and may include corticosteroid injections, topical treatments, or new systemic medications called JAK inhibitors for severe cases."
+            },
+            LPP_FFA: {
+                name: "Scarring Alopecia (e.g., LPP/FFA)",
+                description: "This is a group of less common, inflammatory disorders that lead to irreversible destruction of hair follicles and permanent hair loss. Key types include Lichen Planopilaris (LPP) and Frontal Fibrosing Alopecia (FFA). They are often accompanied by symptoms like intense itching, burning, or pain.",
+                evidence: "Your answers pointing to symptoms like scalp pain or itching, a receding hairline, and/or eyebrow loss are significant warning signs for a potential scarring alopecia.",
+                nextSteps: "This requires urgent evaluation by a dermatologist. A scalp biopsy is the gold standard for diagnosis. The goal of treatment is to halt the inflammatory process and prevent further permanent hair loss, often using anti-inflammatory and immunomodulatory medications."
+            },
+            Nutrient: {
+                name: "Nutritional Deficiency",
+                description: "Hair loss can be a sign of deficiencies in key nutrients, most commonly iron (low ferritin), but also Vitamin D, zinc, and protein. This usually causes diffuse shedding similar to Telogen Effluvium.",
+                evidence: "Your answers suggesting a restrictive diet, rapid weight loss, or other risk factors for nutritional issues may indicate this as a contributing factor.",
+                nextSteps: "A simple blood test ordered by your doctor can check for common deficiencies. If identified, targeted supplementation and dietary changes can often reverse the hair loss."
+            },
+             Traction: {
+                name: "Traction Alopecia / Hair Breakage",
+                description: "This type of hair loss is caused by mechanical stress or damage to the hair follicles and shaft. It can result from frequently wearing tight hairstyles that pull on the hair, or from harsh chemical treatments that weaken the hair, leading to breakage.",
+                evidence: "Your report of frequent tight hairstyles or chemical processing suggests this could be a primary or contributing cause.",
+                nextSteps: "The key is to change hair care practices immediately. Avoid tight styles and give your hair a break from harsh chemicals. If caught early, the hair can regrow. In long-standing cases, the follicle damage may be permanent."
+            }
+        };
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+
+        const startBtn = document.getElementById('start-quiz-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const retakeBtn = document.getElementById('retake-quiz-btn');
+
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const quizProper = document.getElementById('quiz-proper');
+        const questionContainer = document.getElementById('question-container');
+        const progressBar = document.getElementById('progress-bar');
+        const resultsContainer = document.getElementById('results-container');
+        const resultsContent = document.getElementById('results-content');
+        
+        const modal = document.getElementById('infoModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+
+        startBtn.addEventListener('click', startQuiz);
+        prevBtn.addEventListener('click', showPreviousQuestion);
+        nextBtn.addEventListener('click', showNextQuestion);
+        retakeBtn.addEventListener('click', () => {
+             location.reload();
+        });
+        
+        closeModal.addEventListener('click', () => modal.style.display = "none");
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+
+
+        function startQuiz() {
+            welcomeScreen.style.display = 'none';
+            quizProper.style.display = 'block';
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const questionData = quizData[currentQuestionIndex];
+            const card = document.createElement('div');
+            card.className = 'question-card bg-white p-6 sm:p-8 rounded-xl shadow-lg';
+            
+            let optionsHtml = '';
+            if (questionData.type === 'multiple') {
+                optionsHtml = questionData.options.map((opt, index) => `
+                    <button class="option-btn w-full text-left p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-500" data-option-index="${index}">
+                        ${opt.text}
+                    </button>
+                `).join('');
+            } else {
+                 optionsHtml = questionData.options.map((opt, index) => `
+                    <button class="option-btn w-full text-left p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-500" data-option-index="${index}">
+                        ${opt.text}
+                    </button>
+                `).join('');
+            }
+            
+            const questionText = `
+                <div class="flex justify-between items-start">
+                    <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">${currentQuestionIndex + 1}. ${questionData.question}</h2>
+                    <button class="info-btn text-indigo-500 hover:text-indigo-700" data-index="${currentQuestionIndex}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </button>
+                </div>
+                <div class="space-y-4 options-container">
+                   ${optionsHtml}
+                </div>
+            `;
+            card.innerHTML = questionText;
+            
+            questionContainer.innerHTML = '';
+            questionContainer.appendChild(card);
+
+            updateProgressBar();
+            updateNavigation();
+            
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', handleOptionSelect);
+            });
+
+            document.querySelector('.info-btn').addEventListener('click', (e) => {
+                const index = e.currentTarget.getAttribute('data-index');
+                const info = quizData[index].info;
+                modalTitle.textContent = info.title;
+                modalText.textContent = info.text;
+                modal.style.display = "flex";
+            });
+
+            // Restore selections
+            const currentAnswer = userAnswers[currentQuestionIndex];
+            if (currentAnswer !== undefined) {
+                if (Array.isArray(currentAnswer)) {
+                    currentAnswer.forEach(selectedIndex => {
+                        const selectedBtn = card.querySelector(`[data-option-index="${selectedIndex}"]`);
+                        if (selectedBtn) selectedBtn.classList.add('selected');
+                    });
+                } else {
+                    const selectedBtn = card.querySelector(`[data-option-index="${currentAnswer}"]`);
+                    if(selectedBtn) selectedBtn.classList.add('selected');
+                }
+            }
+        }
+
+        function handleOptionSelect(event) {
+            const selectedButton = event.currentTarget;
+            const optionIndex = parseInt(selectedButton.dataset.optionIndex);
+            const questionData = quizData[currentQuestionIndex];
+
+            if (questionData.type === 'multiple') {
+                if (!Array.isArray(userAnswers[currentQuestionIndex])) {
+                    userAnswers[currentQuestionIndex] = [];
+                }
+                const selectedOptions = userAnswers[currentQuestionIndex];
+                const indexInAnswers = selectedOptions.indexOf(optionIndex);
+
+                if (indexInAnswers > -1) {
+                    selectedOptions.splice(indexInAnswers, 1); // Deselect
+                    selectedButton.classList.remove('selected');
+                } else {
+                    selectedOptions.push(optionIndex); // Select
+                    selectedButton.classList.add('selected');
+                }
+            } else {
+                userAnswers[currentQuestionIndex] = optionIndex;
+                document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+                selectedButton.classList.add('selected');
+                
+                // Automatically move to the next question for single-choice
+                setTimeout(() => {
+                    showNextQuestion();
+                }, 300);
+            }
+            
+            updateNavigation();
+        }
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                calculateResults();
+            }
+        }
+
+        function showPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+        
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        function updateNavigation() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            const currentAnswer = userAnswers[currentQuestionIndex];
+            const questionData = quizData[currentQuestionIndex];
+
+            if (questionData.type === 'multiple') {
+                nextBtn.disabled = !currentAnswer || currentAnswer.length === 0;
+            } else {
+                nextBtn.disabled = currentAnswer === undefined;
+            }
+
+            if(currentQuestionIndex === quizData.length - 1){
+                nextBtn.textContent = 'See Results';
+            } else {
+                 nextBtn.textContent = 'Next';
+            }
+        }
+
+        function calculateResults() {
+            let scores = { FPHL: 0, TE: 0, AA: 0, LPP_FFA: 0, Nutrient: 0, Traction: 0 };
+            let totalPoints = 0;
+
+            quizData.forEach((question, questionIdx) => {
+                const answer = userAnswers[questionIdx];
+                if (answer === undefined) return;
+
+                if (Array.isArray(answer)) { // Handle multiple choice
+                    answer.forEach(answerIdx => {
+                        const points = question.options[answerIdx].points;
+                        for (const condition in points) {
+                            scores[condition] += points[condition];
+                            totalPoints += points[condition];
+                        }
+                    });
+                } else { // Handle single choice
+                    const points = question.options[answer].points;
+                    for (const condition in points) {
+                        scores[condition] += points[condition];
+                        totalPoints += points[condition];
+                    }
+                }
+            });
+
+            const sortedScores = Object.entries(scores)
+                .map(([condition, score]) => ({
+                    condition,
+                    score,
+                    percentage: totalPoints > 0 ? Math.round((score / totalPoints) * 100) : 0
+                }))
+                .filter(item => item.score > 0)
+                .sort((a, b) => b.score - a.score);
+
+            displayResults(sortedScores);
+        }
+
+        function displayResults(sortedScores) {
+            quizProper.style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'none';
+            resultsContainer.style.display = 'block';
+            resultsContent.innerHTML = ''; // Clear previous results
+
+            if (sortedScores.length === 0) {
+                resultsContent.innerHTML = `<div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <h3 class="text-xl font-semibold mb-2">Insufficient Data</h3>
+                    <p>We couldn't determine a likely pattern from your answers. It's best to consult a dermatologist for a thorough evaluation.</p>
+                </div>`;
+                return;
+            }
+
+            sortedScores.forEach((result, index) => {
+                const conditionInfo = resultsMap[result.condition];
+                const card = document.createElement('div');
+                card.className = 'result-card bg-white p-6 rounded-xl shadow-lg border-l-4';
+                card.style.animationDelay = `${index * 0.15}s`;
+                
+                let borderColor = 'border-gray-300';
+                if(result.percentage > 50) borderColor = 'border-red-500';
+                else if (result.percentage > 25) borderColor = 'border-yellow-500';
+                else borderColor = 'border-green-500';
+                card.classList.add(borderColor);
+
+                card.innerHTML = `
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-indigo-700">${conditionInfo.name}</h3>
+                        <div class="text-lg font-semibold text-gray-700 mt-2 md:mt-0">Likelihood: <span class="${borderColor.replace('border', 'text')}">${result.percentage}%</span></div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 mb-4 shadow-inner">
+                        <div class="result-bar-inner bg-gradient-to-r from-indigo-400 to-indigo-600 h-4 rounded-full" style="width: 0%;" data-width="${result.percentage}%"></div>
+                    </div>
+                    <p class="text-gray-600 mb-3"><strong class="text-gray-800">What it is:</strong> ${conditionInfo.description}</p>
+                    <p class="text-gray-600 mb-4"><strong class="text-gray-800">Why it might be relevant to you:</strong> ${conditionInfo.evidence}</p>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-indigo-800 mb-1">Potential Next Steps</h4>
+                        <p class="text-indigo-700 text-sm">${conditionInfo.nextSteps}</p>
+                    </div>
+                `;
+                resultsContent.appendChild(card);
+            });
+
+            // Animate progress bars
+            document.querySelectorAll('.result-bar-inner').forEach(bar => {
+                setTimeout(() => {
+                    bar.style.width = bar.dataset.width;
+                }, 100);
+            });
+        }
+    </script>
+
+</body>
+</html>

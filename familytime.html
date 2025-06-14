@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reclaiming Your Time: A Visual Guide to Productivity (Dark Theme)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark background */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .gradient-text {
+            /* New vibrant gradient for dark theme */
+            background: linear-gradient(to right, #22D3EE, #A3E635); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="text-gray-300">
+
+    <header class="bg-[#1F2937] shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-100">Productivity Blueprint</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#foundation" class="hover:text-[#22D3EE] transition-colors">Foundation</a>
+                <a href="#techniques" class="hover:text-[#22D3EE] transition-colors">Techniques</a>
+                <a href="#tools" class="hover:text-[#22D3EE] transition-colors">Tools</a>
+                <a href="#delegate" class="hover:text-[#22D3EE] transition-colors">Delegation</a>
+                <a href="#harmony" class="hover:text-[#22D3EE] transition-colors">Harmony</a>
+                <a href="#non-ai-hacks" class="hover:text-[#22D3EE] transition-colors">Non-AI Hacks</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+        <section id="hero" class="text-center py-20">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 text-gray-50">Reclaiming Your Most <span class="gradient-text">Precious Resource</span></h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">An infographic guide to enhancing productivity, freeing up valuable time for what truly matters: your friends and family.</p>
+        </section>
+
+        <section id="foundation" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2 text-gray-100">The Foundation: Understand & Prioritize Your Time</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">To reclaim time, you must first understand where it goes. Gaining clarity on your daily activities is the first step toward aligning your actions with your core priorities.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-center text-gray-100">Where Does the Time Go?</h3>
+                     <p class="text-gray-400 mb-4 text-sm">A time log often reveals a stark difference between perceived and actual time usage. This chart illustrates a typical weekly allocation for a busy individual, highlighting how distractions and non-essential tasks can crowd out valuable personal time.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="timeAllocationChart"></canvas>
+                    </div>
+                </div>
+                <div class="md:col-span-1 bg-[#1F2937] rounded-lg shadow-lg p-6 md:p-8">
+                    <h3 class="text-xl font-bold mb-4 text-center text-gray-100">The Eisenhower Matrix: Focus on What's Important</h3>
+                    <p class="text-gray-400 mb-6 text-sm">Distinguish between urgent and important tasks to focus your energy effectively. Your goal of spending more time with loved ones falls into the "Important, Not Urgent" quadrant—an area that requires proactive scheduling to protect it from life's demands.</p>
+                    <div class="grid grid-cols-2 grid-rows-2 gap-4">
+                        <div class="bg-[#be123c]/20 border-2 border-[#fb7185] rounded-lg p-4">
+                            <h4 class="font-bold text-gray-200">Urgent & Important</h4>
+                            <p class="text-xs text-gray-400">Crises, deadlines. Do these immediately.</p>
+                        </div>
+                        <div class="bg-[#16a34a]/20 border-2 border-[#4ade80] rounded-lg p-4">
+                            <h4 class="font-bold text-gray-200">Important & Not Urgent</h4>
+                            <p class="text-xs text-gray-400">Relationship building, planning, self-care. Schedule and protect this time.</p>
+                        </div>
+                        <div class="bg-[#d97706]/20 border-2 border-[#fcd34d] rounded-lg p-4">
+                            <h4 class="font-bold text-gray-200">Urgent & Not Important</h4>
+                            <p class="text-xs text-gray-400">Interruptions, some meetings. Delegate where possible.</p>
+                        </div>
+                        <div class="bg-gray-600/20 border-2 border-gray-500 rounded-lg p-4">
+                            <h4 class="font-bold text-gray-200">Not Urgent & Not Important</h4>
+                            <p class="text-xs text-gray-400">Time-wasters, excessive scrolling. Eliminate or minimize.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="techniques" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2 text-gray-100">Strategic Techniques to Reclaim Hours</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Implementing proven time management methods can dramatically improve your efficiency, creating dedicated space for your personal life.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                 <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-100">Time Blocking: From To-Do List to Schedule</h3>
+                    <p class="text-gray-400 mb-6 text-sm">Time blocking transforms your day from reactive to proactive. By dedicating specific blocks to tasks—including personal time—you create a concrete plan that defends your priorities against interruptions.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-24 text-right mr-4 font-semibold text-[#8B5CF6]">9am-11am</div>
+                            <div class="flex-1 bg-[#8B5CF6]/20 border-l-4 border-[#8B5CF6] p-3 rounded-r-lg">Deep Work: Project Alpha</div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-24 text-right mr-4 font-semibold text-gray-500">11am-12pm</div>
+                            <div class="flex-1 bg-gray-700/50 border-l-4 border-gray-600 p-3 rounded-r-lg">Admin & Email Batch</div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-24 text-right mr-4 font-semibold text-gray-500">12pm-1pm</div>
+                            <div class="flex-1 bg-gray-700/50 border-l-4 border-gray-600 p-3 rounded-r-lg">Lunch Break</div>
+                        </div>
+                         <div class="flex items-center">
+                            <div class="w-24 text-right mr-4 font-semibold text-[#A3E635]">5pm-7pm</div>
+                            <div class="flex-1 bg-[#A3E635]/20 border-l-4 border-[#A3E635] p-3 rounded-r-lg font-bold">Protected Family Time</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-100">Task Batching: End the Context-Switching Chaos</h3>
+                    <p class="text-gray-400 mb-6 text-sm">Constantly switching between different types of tasks drains mental energy. Grouping similar activities together saves time, reduces stress, and improves focus.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold text-[#F472B6] mb-2">Before: Chaotic Day</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
+                                <li>Check Email</li>
+                                <li>Work on Report</li>
+                                <li>Answer Call</li>
+                                <li>Check Email Again</li>
+                                <li>Run an Errand</li>
+                                <li>Back to Report</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[#22D3EE] mb-2">After: Batched Day</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
+                                <li>Morning: Focused Report Work</li>
+                                <li>Late Morning: Email Hour</li>
+                                <li>Lunchtime: All Errands</li>
+                                <li>Afternoon: Calls & Meetings</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tools" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2 text-gray-100">Your Productivity Toolkit</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Leverage technology as a powerful ally, but be mindful of its potential for distraction. The right tools streamline organization, while the wrong ones steal your focus.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-4 text-gray-100">Adoption Rate of Productivity Tools</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Shared calendars and task managers are the cornerstones of digital organization, helping to coordinate family life and reduce mental clutter. Specialized tools for routines and meal planning further enhance efficiency.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="toolsAdoptionChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                     <h3 class="text-xl font-bold mb-4 text-gray-100">Digital Allies vs. Digital Distractions</h3>
+                    <p class="text-gray-400 mb-6 text-sm">Achieving your goal requires protecting the quality of your free time, not just creating more of it. Setting firm boundaries with technology is crucial for being truly present with loved ones.</p>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#A3E635] mb-2">Allies: Use Intentionally</h4>
+                            <div class="flex flex-wrap gap-4 text-sm">
+                                <span class="bg-green-900/50 text-green-300 px-3 py-1 rounded-full">📅 Shared Calendars</span>
+                                <span class="bg-green-900/50 text-green-300 px-3 py-1 rounded-full">✅ Task Managers</span>
+                                <span class="bg-green-900/50 text-green-300 px-3 py-1 rounded-full">🍽️ Meal Planners</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#F472B6] mb-2">Distractions: Minimize & Control</h4>
+                            <div class="flex flex-wrap gap-4 text-sm">
+                                <span class="bg-pink-900/50 text-pink-300 px-3 py-1 rounded-full">📱 Endless Scrolling</span>
+                                <span class="bg-pink-900/50 text-pink-300 px-3 py-1 rounded-full">🔔 Constant Notifications</span>
+                                <span class="bg-pink-900/50 text-pink-300 px-3 py-1 rounded-full">✉️ After-Hours Email</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="delegate" class="py-16">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2 text-gray-100">The Delegation Multiplier</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">You don't have to do it all. Strategic delegation and automation are your most powerful levers for creating significant time and mental freedom.</p>
+            </div>
+             <div class="bg-[#1F2937] rounded-lg shadow-lg p-6 md:p-8 md:col-span-2 mb-8">
+                <h3 class="text-xl font-bold text-center mb-4 text-gray-100">Top Time-Saving Tasks to Automate or Outsource</h3>
+                 <p class="text-gray-400 mb-6 text-sm text-center max-w-2xl mx-auto">Outsourcing routine errands is a strategic investment in your quality of life, not a luxury. The hours saved by delegating these common chores can be directly reinvested into high-value activities, like spending time with family.</p>
+                <div class="chart-container" style="height:400px; max-height: 450px; max-width: 800px;">
+                    <canvas id="delegationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="harmony" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2 text-gray-100">The Ultimate Goal: Cultivating Harmony</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Productivity is the means, not the end. The goal is a more fulfilling life where you are present and engaged with the people who matter most.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                 <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-center mb-4 text-gray-100">The Wheel of Work-Life Balance</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Work-life balance is a dynamic equilibrium, not a static destination. By intentionally nurturing all areas of your life, you build resilience. Strong relationships, in turn, create a positive feedback loop, enhancing your well-being and overall effectiveness.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="harmonyChart"></canvas>
+                    </div>
+                </div>
+                <div class="text-center p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-100">The Positive Feedback Loop</h3>
+                    <p class="text-gray-400 mb-6 text-lg">Intentionally investing your reclaimed time in relationships doesn't just make you happier—it makes you more resilient. Strong social support is a powerful buffer against stress, creating a virtuous cycle.</p>
+                    <div class="text-6xl font-black gradient-text mb-4">85%</div>
+                    <p class="font-semibold text-gray-200">Increase in perceived well-being when time is intentionally invested in social connections.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="non-ai-hacks" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2 text-gray-100">Practical Productivity Hacks (Non-AI)</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Boost your efficiency and free up time with these proven, free strategies that don't rely on technology.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-[#22D3EE]">Planning & Prioritization</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2 text-sm">
+                        <li><b>Plan Ahead:</b> Outline tasks daily/weekly to start with clear direction.</li>
+                        <li><b>Top 3 MITs:</b> Identify 1-3 Most Important Tasks each day and focus on them first.</li>
+                        <li><b>Eisenhower Matrix:</b> Categorize tasks (Urgent/Important) to prioritize effectively.</li>
+                        <li><b>Learn to Say "No":</b> Politely decline requests that don't align with your goals.</li>
+                    </ul>
+                </div>
+                <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-[#A3E635]">Time Management Techniques</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2 text-sm">
+                        <li><b>Time Blocking:</b> Schedule specific blocks for tasks, including personal time.</li>
+                        <li><b>Pomodoro Technique:</b> Work in 25-min focused bursts, 5-min breaks.</li>
+                        <li><b>Task Batching:</b> Group similar tasks (e.g., emails, errands) to do at once.</li>
+                        <li><b>Two-Minute Rule:</b> Do tasks taking &lt; 2 mins immediately.</li>
+                    </ul>
+                </div>
+                <div class="bg-[#1F2937] rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-[#FBBF24]">Environment & Habits</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2 text-sm">
+                        <li><b>Simplify Surroundings:</b> Keep your workspace clean and clutter-free.</li>
+                        <li><b>Eliminate Distractions:</b> Use physical barriers, communicate boundaries, put phone away.</li>
+                        <li><b>Create Rituals:</b> Establish consistent routines for starting/ending work.</li>
+                        <li><b>Single-Tasking:</b> Focus on one task at a time for better efficiency.</li>
+                    </ul>
+                </div>
+                <div class="bg-[#1F2937] rounded-lg shadow-lg p-6 md:col-span-2 lg:col-span-1">
+                    <h3 class="text-xl font-bold mb-4 text-[#F472B6]">Strategic Delegation & Self-Care</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2 text-sm">
+                        <li><b>Household Delegation:</b> Involve family in chores to free up your time.</li>
+                        <li><b>Outsource (Non-AI):</b> Consider services like cleaning or grocery delivery if feasible.</li>
+                        <li><b>Schedule Breaks:</b> Take regular, intentional breaks to recharge.</li>
+                        <li><b>Prioritize Downtime:</b> Schedule relaxation and hobbies; it's essential for well-being.</li>
+                        <li><b>Get Enough Sleep:</b> Aim for 7-9 hours of quality sleep for optimal function.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#1F2937] mt-16">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
+            <p>&copy; 2025 Productivity Blueprint. All data is illustrative, based on the report "Reclaiming Your Most Precious Resource."</p>
+            <p class="text-xs mt-2">No SVG or Mermaid JS was used in the creation of this infographic.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Chart.js Dark Theme Configuration ---
+
+        function wrapLabel(label, maxLength) {
+            if (label.length <= maxLength) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > maxLength && currentLine.length > 0) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine.length > 0) {
+                lines.push(currentLine);
+            }
+            return lines;
+        }
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            return Array.isArray(label) ? label.join(' ') : label;
+        };
+
+        const chartDefaultOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: '#D1D5DB', // Light gray for legend text
+                        font: {
+                            family: 'Inter',
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    bodyFont: { family: 'Inter' },
+                    titleFont: { family: 'Inter' }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#9CA3AF', // Medium gray for axis ticks
+                        font: { family: 'Inter' }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)' // Faint grid lines
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#9CA3AF',
+                        font: { family: 'Inter' }
+                    },
+                     grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                r: { // For Radar and PolarArea charts
+                     ticks: {
+                        color: '#111827',
+                        backdropColor: 'transparent',
+                        font: { family: 'Inter' }
+                     },
+                     pointLabels: {
+                         color: '#D1D5DB',
+                         font: { family: 'Inter', size: 10 }
+                     },
+                     grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                     },
+                     angleLines: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                     }
+                }
+            }
+        };
+        
+        // New vibrant color palette for dark theme
+        const palette = {
+            pink: '#F472B6',
+            amber: '#FBBF24',
+            lime: '#A3E635',
+            cyan: '#22D3EE',
+            violet: '#8B5CF6',
+            teal: '#2DD4BF'
+        };
+
+        new Chart(document.getElementById('timeAllocationChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Work', 'Sleep', 'Chores & Errands', 'Distractions', 'Family & Friends', 'Commute'],
+                datasets: [{
+                    label: 'Hours per Week',
+                    data: [45, 56, 15, 20, 12, 5],
+                    backgroundColor: [palette.violet, palette.teal, palette.amber, palette.pink, palette.lime, palette.cyan],
+                    borderColor: '#111827', // Match body background
+                    borderWidth: 3
+                }]
+            },
+            options: { ...chartDefaultOptions }
+        });
+
+        new Chart(document.getElementById('toolsAdoptionChart'), {
+            type: 'polarArea',
+            data: {
+                labels: ['Shared Calendars', 'Task Managers', 'Digital Note Takers', 'Meal Planners', 'Habit Trackers'],
+                datasets: [{
+                    label: 'Adoption Rate',
+                    data: [90, 85, 75, 60, 50],
+                    backgroundColor: [
+                        'rgba(34, 211, 238, 0.7)',
+                        'rgba(163, 230, 53, 0.7)',
+                        'rgba(251, 191, 36, 0.7)',
+                        'rgba(139, 92, 246, 0.7)',
+                        'rgba(244, 114, 182, 0.7)',
+                    ]
+                }]
+            },
+            options: { ...chartDefaultOptions }
+        });
+        
+        const originalDelegationLabels = [
+            'Grocery Shopping & Delivery',
+            'Household Cleaning Services',
+            'Laundry & Dry Cleaning',
+            'Meal Prep Services',
+            'Lawn Care & Landscaping'
+        ];
+
+        new Chart(document.getElementById('delegationChart'), {
+            type: 'bar',
+            data: {
+                labels: originalDelegationLabels.map(label => wrapLabel(label, 16)),
+                datasets: [{
+                    label: 'Average Hours Saved per Week',
+                    data: [3, 4, 2, 5, 1.5],
+                    backgroundColor: [palette.lime, palette.cyan, palette.amber, palette.violet, palette.pink],
+                }]
+            },
+            options: { ...chartDefaultOptions, indexAxis: 'y' }
+        });
+
+        new Chart(document.getElementById('harmonyChart'), {
+            type: 'radar',
+            data: {
+                labels: ['Career', 'Family & Friends', 'Health', 'Personal Growth', 'Finances', 'Leisure'],
+                datasets: [
+                    {
+                        label: 'Unbalanced State',
+                        data: [9, 3, 4, 3, 8, 2],
+                        fill: true,
+                        backgroundColor: 'rgba(244, 114, 182, 0.2)',
+                        borderColor: palette.pink,
+                        pointBackgroundColor: palette.pink,
+                    },
+                    {
+                        label: 'Harmonious State',
+                        data: [7, 8, 7, 6, 7, 8],
+                        fill: true,
+                        backgroundColor: 'rgba(34, 211, 238, 0.2)',
+                        borderColor: palette.cyan,
+                        pointBackgroundColor: palette.cyan,
+                    }
+                ]
+            },
+             options: { ...chartDefaultOptions, scales: { r: { beginAtZero: true, suggestedMax: 10 } } }
+        });
+
+    </script>
+</body>
+</html>

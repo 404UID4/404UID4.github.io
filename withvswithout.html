@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Analysis of Directional Travel Safety for Bicyclists and Pedestrians</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF; /* White background for printing */
+            color: #000000; /* Black text */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .stat-card h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .stat-card p {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #333333; /* Dark gray for secondary text */
+        }
+        .big-number {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #000000; /* Black for big numbers */
+        }
+        .flow-line {
+            width: 2px;
+            background-color: #AAAAAA; /* Gray for lines */
+            margin: 0 auto;
+        }
+        .flow-box {
+            border: 2px solid #DDDDDD; /* Light gray border */
+            background-color: #FFFFFF; /* White background for flow boxes */
+        }
+        .flow-box h3 {
+            color: #333333; /* Dark gray for flow box headers */
+        }
+        .flow-box.danger {
+            background-color: #F8D7DA; /* Light red for danger boxes */
+            border-color: #721C24; /* Dark red border */
+            color: #721C24; /* Dark red text */
+        }
+        .flow-box.danger h4 {
+            color: #721C24; /* Dark red for danger box titles */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Color Palette: Black/White/Grayscale for printing -->
+    <!-- NEITHER Mermaid JS NOR SVG were used in this output. All charts are via Chart.js Canvas. All diagrams are HTML/Tailwind. -->
+    <!-- Narrative Plan: Hook with crisis -> Bicyclist rules -> Pedestrian rules -> Compare rules -> Shared risks -> Recommendations -->
+    <!-- Visualization Plan: Using Chart.js for all charts (Donut, Line, Bar, Stacked Bar) and HTML/CSS for flowcharts/diagrams. All on Canvas or DOM, NO SVG. -->
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">On the Wrong Side of the Road</h1>
+            <p class="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto">An interactive analysis of why the direction you travel is a life-or-death decision for bicyclists and pedestrians.</p>
+        </header>
+
+        <main>
+            <section id="crisis" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-2">A Worsening National Crisis</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Vulnerable road users (VRUs) face disproportionate risks. Recent data reveals a disturbing upward trend in fatalities, highlighting systemic failures in road safety.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+                        <span class="text-6xl mb-2">🚲</span>
+                        <div class="big-number">1,166</div>
+                        <h3 class="text-2xl font-bold mt-2">Bicyclist Fatalities</h3>
+                        <p class="mt-2">The number of bicyclists killed in traffic incidents in 2023, a stark reminder of their vulnerability.</p>
+                    </div>
+
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center">
+                        <span class="text-6xl mb-2">🚶</span>
+                        <div class="big-number">7,314</div>
+                        <h3 class="text-2xl font-bold mt-2">Pedestrian Fatalities</h3>
+                        <p class="mt-2">The tragic count of pedestrian deaths in 2023. This group has seen a staggering 77% increase in fatalities since 2010.</p>
+                    </div>
+
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6 md:col-span-2 lg:col-span-1">
+                        <h3>VRUs Share of All Traffic Deaths</h3>
+                        <p class="mb-4">Pedestrians and bicyclists are overrepresented in fatalities, accounting for about one-fifth of all traffic-related deaths annually.</p>
+                        <div class="chart-container h-64"><canvas id="vruFatalitiesChart"></canvas></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="bicyclists" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-2">Bicyclist's Rulebook: Ride WITH Traffic</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">For cyclists, safety lies in predictability. Riding in the same direction as traffic is not just a guideline; it's a critical survival strategy rooted in driver expectation and the physics of impact.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6 text-center lg:col-span-1">
+                        <div class="big-number">3.6x</div>
+                        <h3 class="text-xl font-bold mt-2">Increased Crash Likelihood</h3>
+                        <p class="mt-2">Cyclists traveling against traffic are 3.6 times more likely to be involved in an incident. This practice, known as "salmoning," dramatically elevates risk by violating driver expectations.</p>
+                    </div>
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6">
+                        <h3>The Physics of a Head-On Collision</h3>
+                        <p class="mb-4">Wrong-way riding often leads to head-on collisions. The combined speeds create catastrophic impact forces, far exceeding a typical rear-end collision.</p>
+                        <div class="chart-container h-64"><canvas id="impactSpeedChart"></canvas></div>
+                    </div>
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6">
+                        <h3>Wrong-Way Riding's Role in Crashes</h3>
+                        <p class="mb-4">Riding against traffic is a major contributing factor, implicated in approximately one-third of all bicycle-motor vehicle crashes, with the risk even higher at intersections.</p>
+                        <div class="chart-container h-64"><canvas id="wrongWayContributionChart"></canvas></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pedestrians" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-2">Pedestrian's Playbook: Walk FACING Traffic</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">When sidewalks are unavailable, the safest place for a pedestrian is on the left side of the road, facing oncoming cars. This simple act provides the visual information needed to see and react to danger.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div class="stat-card bg-white rounded-xl shadow-lg p-6">
+                        <div class="flex items-center justify-center">
+                           <div class="text-center">
+                                <div class="big-number">77%</div>
+                                <h3 class="text-xl font-bold -mt-2">Decrease in Accidents</h3>
+                           </div>
+                        </div>
+                        <p class="mt-4">The most powerful statistic in its favor: walking facing traffic is associated with a 77% decrease in fatal and non-fatal injury accidents compared to walking with your back to cars. It empowers you to see a threat and step away.</p>
+                    </div>
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6">
+                        <h3>Fatal Risk: With vs. Against Traffic</h3>
+                        <p class="mb-4">Walking with traffic significantly increases the chance of a fatal outcome if a crash occurs. The data shows pedestrians are over 1.5 times more likely to die when struck from behind compared to being struck head-on.</p>
+                        <div class="chart-container h-64"><canvas id="pedestrianFatalityRiskChart"></canvas></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="comparison" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-2">A Tale of Two Directions</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Why do the rules differ? It boils down to a core trade-off between predictability and visibility, based on how each user interacts with the traffic system.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-8">
+                    <div class="w-full md:w-1/2">
+                        <div class="flow-box rounded-xl p-6 text-center">
+                            <span class="text-6xl">🚲</span>
+                            <h3 class="text-2xl font-bold mt-2">Bicyclists: WITH Traffic</h3>
+                        </div>
+                        <div class="flow-line h-8"></div>
+                        <div class="flow-box rounded-xl p-6 text-center">
+                            <h4 class="font-bold text-lg">Primary Rationale: Predictability</h4>
+                            <p class="text-gray-700 mt-2">Bikes act as vehicles. Riding with traffic integrates them into the expected flow, allowing drivers to anticipate their movements at intersections and driveways.</p>
+                        </div>
+                        <div class="flow-line h-8"></div>
+                        <div class="flow-box rounded-xl p-6 text-center danger">
+                             <h4 class="font-bold text-lg">The Danger: Low Reaction Time</h4>
+                             <p class="text-gray-700 mt-2">Riding against traffic creates an "expectation gap." Drivers aren't looking for you, leading to head-on collisions with severe consequences.</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2">
+                        <div class="flow-box rounded-xl p-6 text-center">
+                            <span class="text-6xl">🚶</span>
+                            <h3 class="text-2xl font-bold mt-2">Pedestrians: FACING Traffic</h3>
+                        </div>
+                        <div class="flow-line h-8"></div>
+                        <div class="flow-box rounded-xl p-6 text-center">
+                            <h4 class="font-bold text-lg">Primary Rationale: Visibility</h4>
+                            <p class="text-gray-700 mt-2">Pedestrians are slower and outside the main flow. Facing traffic lets them see approaching vehicles and react defensively to danger.</p>
+                        </div>
+                         <div class="flow-line h-8"></div>
+                        <div class="flow-box rounded-xl p-6 text-center danger">
+                             <h4 class="font-bold text-lg">The Danger: No Escape Route</h4>
+                             <p class="text-gray-700 mt-2">Walking with traffic leaves you blind to vehicles approaching from behind. You are completely reliant on the driver's awareness for your safety.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="shared-risks" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-2">Common Ground: Shared Dangers</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Regardless of direction, both bicyclists and pedestrians are threatened by a similar set of environmental and behavioral risk factors.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6">
+                        <h3>The Fatality Nexus for Pedestrians</h3>
+                        <p class="mb-4">The vast majority of pedestrian deaths share three key traits: they happen in urban areas, in the dark, and away from intersections, highlighting major flaws in road design and lighting.</p>
+                        <div class="chart-container h-64"><canvas id="fatalityNexusChart"></canvas></div>
+                    </div>
+                    <div class="stat-card bg-white rounded-xl shadow-lg p-6">
+                        <h3>The Role of Alcohol Impairment</h3>
+                        <p class="mb-4">Alcohol is a major factor in fatal crashes, impairing the judgment and reaction time of both drivers and vulnerable road users alike. It contributes to nearly half of all pedestrian fatalities.</p>
+                        <div class="chart-container h-64"><canvas id="alcoholInvolvementChart"></canvas></div>
+                    </div>
+                </div>
+            </section>
+
+             <section id="recommendations" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-2">Building a Safer Future</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Creating safer streets requires a multi-faceted "Safe System" approach that combines better infrastructure, smarter laws, and broader public education.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="flow-box rounded-xl p-6 text-center">
+                        <span class="text-5xl">🏗️</span>
+                        <h3 class="font-bold text-xl mt-3 mb-2">Engineering</h3>
+                        <p class="text-sm text-gray-700">Build protected bike lanes, expand sidewalk networks, improve street lighting, and implement traffic calming measures.</p>
+                    </div>
+                    <div class="flow-box rounded-xl p-6 text-center">
+                        <span class="text-5xl">🎓</span>
+                        <h3 class="font-bold text-xl mt-3 mb-2">Education</h3>
+                        <p class="text-sm text-gray-700">Launch campaigns on *why* directional rules exist. Enhance driver's ed to focus on VRU awareness and rights.</p>
+                    </div>
+                    <div class="flow-box rounded-xl p-6 text-center">
+                        <span class="text-5xl">🚓</span>
+                        <h3 class="font-bold text-xl mt-3 mb-2">Enforcement</h3>
+                        <p class="text-sm text-gray-700">Consistently enforce directional travel laws and strengthen enforcement against impaired and distracted driving.</p>
+                    </div>
+                     <div class="flow-box rounded-xl p-6 text-center">
+                        <span class="text-5xl">🚑</span>
+                        <h3 class="font-bold text-xl mt-3 mb-2">Emergency Services</h3>
+                        <p class="text-sm text-gray-700">Ensure rapid and effective post-crash care to reduce the severity of injuries and save lives when crashes do occur.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 pt-8 border-t border-gray-300">
+            <p class="text-gray-500">Data synthesized from the "An Analysis of Directional Travel Safety for Bicyclists and Pedestrians" report.</p>
+            <p class="text-sm text-gray-600 mt-1">This infographic is for educational purposes and was generated based on public safety data.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const grayscalePalette = {
+                black: '#000000',
+                darkGray: '#333333',
+                mediumGray: '#666666',
+                lightGray: '#BBBBBB',
+                veryLightGray: '#EEEEEE',
+                white: '#FFFFFF'
+            };
+
+            const globalChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: grayscalePalette.darkGray // Dark gray labels for light theme
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        color: grayscalePalette.darkGray, // Dark gray title
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: grayscalePalette.darkGray }, // Dark ticks
+                        grid: { color: grayscalePalette.lightGray } // Lighter grid lines
+                    },
+                    x: {
+                        ticks: { color: grayscalePalette.darkGray }, // Dark ticks
+                        grid: { color: grayscalePalette.lightGray } // Lighter grid lines
+                    }
+                }
+            };
+
+
+            const vruFatalitiesCtx = document.getElementById('vruFatalitiesChart')?.getContext('2d');
+            if(vruFatalitiesCtx) {
+                new Chart(vruFatalitiesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['VRU Fatalities', 'Other Traffic Fatalities'],
+                        datasets: [{
+                            label: 'Share of Fatalities',
+                            data: [20, 80],
+                            backgroundColor: [grayscalePalette.darkGray, grayscalePalette.lightGray],
+                            borderColor: grayscalePalette.white, // White border for light theme
+                            borderWidth: 4
+                        }]
+                    },
+                    options: { 
+                        ...globalChartOptions, 
+                        scales: {},
+                        plugins: {
+                            ...globalChartOptions.plugins,
+                            title: {
+                                ...globalChartOptions.plugins.title,
+                                text: 'VRUs Share of All Traffic Deaths'
+                            }
+                        }
+                    }
+                });
+            }
+
+            const impactSpeedCtx = document.getElementById('impactSpeedChart')?.getContext('2d');
+            if (impactSpeedCtx) {
+                new Chart(impactSpeedCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Rear-End Collision', 'Head-On Collision'],
+                        datasets: [{
+                            label: 'Relative Impact Speed (mph)',
+                            data: [20, 50],
+                            backgroundColor: [grayscalePalette.mediumGray, grayscalePalette.darkGray],
+                            borderColor: [grayscalePalette.mediumGray, grayscalePalette.darkGray],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        ...globalChartOptions,
+                        plugins: {
+                            ...globalChartOptions.plugins,
+                            title: {
+                                ...globalChartOptions.plugins.title,
+                                text: 'Relative Impact Speed in Collisions'
+                            }
+                        }
+                    }
+                });
+            }
+
+            const wrongWayContributionCtx = document.getElementById('wrongWayContributionChart')?.getContext('2d');
+            if (wrongWayContributionCtx) {
+                new Chart(wrongWayContributionCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Crashes Involving Wrong-Way Riding', 'Other Causes'],
+                        datasets: [{
+                            data: [33, 67],
+                            backgroundColor: [grayscalePalette.darkGray, grayscalePalette.lightGray],
+                            borderColor: grayscalePalette.white, // White border for light theme
+                            borderWidth: 4
+                        }]
+                    },
+                    options: { 
+                        ...globalChartOptions, 
+                        scales: {},
+                        plugins: {
+                            ...globalChartOptions.plugins,
+                            title: {
+                                ...globalChartOptions.plugins.title,
+                                text: 'Wrong-Way Riding\'s Crash Contribution'
+                            }
+                        }
+                    }
+                });
+            }
+            
+            const pedestrianFatalityRiskCtx = document.getElementById('pedestrianFatalityRiskChart')?.getContext('2d');
+            if (pedestrianFatalityRiskCtx) {
+                new Chart(pedestrianFatalityRiskCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Walking Facing Traffic', 'Walking With Traffic'],
+                        datasets: [{
+                            label: 'Relative Risk of Fatality',
+                            data: [1, 1.542],
+                             backgroundColor: [grayscalePalette.mediumGray, grayscalePalette.darkGray],
+                             borderColor: [grayscalePalette.mediumGray, grayscalePalette.darkGray],
+                             borderWidth: 1
+                        }]
+                    },
+                    options: { 
+                        ...globalChartOptions, 
+                        indexAxis: 'y',
+                        plugins: {
+                            ...globalChartOptions.plugins,
+                            title: {
+                                ...globalChartOptions.plugins.title,
+                                text: 'Pedestrian Fatality Risk: With vs. Facing Traffic'
+                            }
+                        }
+                    }
+                });
+            }
+
+            const fatalityNexusCtx = document.getElementById('fatalityNexusChart')?.getContext('2d');
+            if (fatalityNexusCtx) {
+                new Chart(fatalityNexusCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Urban Areas', 'Dark Conditions', 'Non-Intersection Locations'],
+                        datasets: [{
+                            label: 'Percentage of Pedestrian Fatalities',
+                            data: [85, 78, 75],
+                            backgroundColor: [grayscalePalette.darkGray, grayscalePalette.mediumGray, grayscalePalette.lightGray]
+                        }]
+                    },
+                    options: { 
+                        ...globalChartOptions, 
+                        indexAxis: 'y',
+                        plugins: {
+                            ...globalChartOptions.plugins,
+                            title: {
+                                ...globalChartOptions.plugins.title,
+                                text: 'Pedestrian Fatality Nexus Factors'
+                            }
+                        }
+                    }
+                });
+            }
+
+            const alcoholInvolvementCtx = document.getElementById('alcoholInvolvementChart')?.getContext('2d');
+            if (alcoholInvolvementCtx) {
+                new Chart(alcoholInvolvementCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Fatal Bicyclist Crashes', 'Fatal Pedestrian Crashes'],
+                        datasets: [{
+                            label: '% Involving Alcohol',
+                            data: [33, 48],
+                            backgroundColor: [grayscalePalette.mediumGray, grayscalePalette.darkGray]
+                        }]
+                    },
+                    options: { 
+                        ...globalChartOptions,
+                        scales: { y: { beginAtZero: true, max: 100, ticks: { color: grayscalePalette.darkGray }, grid: { color: grayscalePalette.lightGray } } },
+                        plugins: {
+                            ...globalChartOptions.plugins,
+                            title: {
+                                ...globalChartOptions.plugins.title,
+                                text: 'Alcohol Involvement in Fatal Crashes'
+                            }
+                        }
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

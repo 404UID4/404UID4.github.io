@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Evidence-Based Review of Severe Hair Loss in Women</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .flowchart-node {
+            position: relative;
+            padding-top: 2.5rem; /* Space for the arrow from above */
+        }
+        .flowchart-node:not(:first-child)::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 2.5rem;
+            background-color: #374151; /* gray-700 */
+        }
+        @media (min-width: 1024px) {
+            .flowchart-node {
+                padding-top: 0;
+                padding-left: 3rem; /* Space for arrow from the left */
+            }
+            .flowchart-node::before {
+                top: 50%;
+                left: 0;
+                width: 3rem;
+                height: 2px;
+            }
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.4), 0 0 5px rgba(34, 211, 238, 0.6);
+        }
+        .glow-magenta {
+             box-shadow: 0 0 15px rgba(217, 70, 239, 0.4), 0 0 5px rgba(217, 70, 239, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-300">
+    <!-- 
+    Infographic Narrative Plan:
+    1.  Introduction: Hook with key statistics using an "ultra-premium" dark theme.
+    2.  The Fundamental Divide: Visually separate non-scarring and scarring alopecias.
+    3.  Prevalence of Causes: Use a Donut chart with a dark theme to show relative frequency.
+    4.  Comparing Non-Scarring Alopecias: Use a Bar chart to compare features of FPHL, TE, and AA.
+    5.  Self-Assessment Decision Paths: A restructured, mobile-first flowchart.
+    6.  The Comprehensive Diagnostic Pathway: A rebuilt, reliable flowchart that stacks vertically on mobile.
+    7.  Treatment Landscape: An updated, comprehensive table organizing treatments by condition and evidence.
+    8.  New Section: The Psychological Impact of hair loss.
+    9.  Conclusion: Summarize key takeaways, emphasizing holistic care.
+
+    Visualization Choices & Justification (NO SVG, NO MERMAID JS):
+    -   Key Stats: Single Big Numbers (HTML/Tailwind) -> Goal: Inform.
+    -   Prevalence of Causes: Donut Chart (Chart.js/Canvas) -> Goal: Compare Composition.
+    -   Comparing Features: Bar Chart (Chart.js/Canvas) -> Goal: Compare multiple features.
+    -   Self-Diagnosis & Clinical Pathways: Restructured Flowcharts (HTML/CSS/Tailwind) -> Goal: Organize.
+    -   Treatment Options: Table (HTML/Tailwind) -> Goal: Organize.
+    -   Psychological Impact: Card-based layout (HTML/Tailwind) -> Goal: Inform.
+
+    Color Palette Selection:
+    -   Chosen Palette Name: "Cyber Glow" (Dark theme with high-contrast accents).
+    -   Primary Colors: #111827 (Gray 900), #1F2937 (Gray 800), #D1D5DB (Gray 300).
+    -   Accent Colors for Charts & Highlights: #22D3EE (Cyan 400), #D946EF (Fuchsia 500), #FBBF24 (Amber 400), #F87171 (Red 400).
+
+    Confirmation: NEITHER Mermaid JS NOR SVG were used in this output. All visualizations are rendered using Chart.js (Canvas) or structured HTML with Tailwind CSS. Layout issues are fixed and mobile support is prioritized.
+    -->
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight">The Clinical Challenge of Female Hair Loss</h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto">A deep dive into severe effluvium in a 50-year-old female, exploring the crossroads of hormonal shifts, genetics, and systemic health to form a complete diagnostic and therapeutic picture.</p>
+        </header>
+        
+        <main class="space-y-12 md:space-y-16">
+
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                    <p class="text-7xl font-bold text-cyan-400 glow-cyan">>50%</p>
+                    <h3 class="text-lg font-semibold text-white mt-2">Postmenopausal Prevalence</h3>
+                    <p class="text-sm text-gray-400">More than half of women experience noticeable Female Pattern Hair Loss (FPHL) after menopause, making it the most common cause.</p>
+                </div>
+                <div class="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                    <p class="text-7xl font-bold text-amber-400">2-4</p>
+                    <h3 class="text-lg font-semibold text-white mt-2">Months of Delayed Shedding</h3>
+                    <p class="text-sm text-gray-400">Telogen Effluvium hair loss typically occurs months after a physiological or emotional trigger, making diagnosis a historical investigation.</p>
+                </div>
+                 <div class="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                    <p class="text-7xl font-bold text-red-400">⚠️</p>
+                    <h3 class="text-lg font-semibold text-white mt-2">Scarring vs. Non-Scarring</h3>
+                    <p class="text-sm text-gray-400">The critical first step is distinguishing scarring (permanent follicle destruction) from non-scarring (potential for regrowth) alopecias.</p>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-700">
+                <div class="lg:col-span-2">
+                    <h2 class="text-3xl font-bold text-white mb-4">Relative Frequency of Causes</h2>
+                    <p class="text-gray-400">This chart illustrates the estimated prevalence of the most common hair loss diagnoses in women. While Androgenetic Alopecia is the most frequent, a full differential diagnosis is essential, as TE and AA are also significant contributors, and rare scarring alopecias have severe consequences.</p>
+                </div>
+                <div class="lg:col-span-3">
+                    <div class="chart-container">
+                        <canvas id="prevalenceChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-700">
+                <h2 class="text-3xl font-bold text-white mb-4 text-center">Comparing Non-Scarring Alopecias</h2>
+                <p class="text-gray-400 mb-8 text-center max-w-3xl mx-auto">While all three conditions below preserve the hair follicle, they have distinct causes, presentations, and diagnostic signs.</p>
+                <div class="chart-container mx-auto" style="max-width: 800px;">
+                    <canvas id="nonScarringFeaturesChart"></canvas>
+                </div>
+            </section>
+
+            <section class="bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-700">
+                <h2 class="text-3xl font-bold text-white mb-4 text-center">Self-Assessment: Understanding Your Symptoms</h2>
+                <p class="text-gray-400 mb-10 max-w-4xl mx-auto text-center">This simplified guide can help identify potential patterns. It is for informational purposes only and not a substitute for professional medical diagnosis.</p>
+                
+                <div class="text-center mb-8">
+                    <div class="inline-block bg-gray-900 text-cyan-400 font-semibold p-4 rounded-lg shadow-lg border border-cyan-500/30">START: What best describes your hair loss?</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Path 1: Gradual Thinning -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-full bg-gray-700 p-4 rounded-lg border border-gray-600"><h3 class="font-semibold text-white">Gradual thinning, widening part</h3></div>
+                        <div class="text-5xl text-gray-600 my-4">↓</div>
+                        <div class="w-full bg-green-900/50 text-green-300 p-4 rounded-lg shadow-md border border-green-500/30"><p class="font-bold">Suggests: FPHL</p><p class="text-xs mt-1">(Androgenetic Alopecia)</p></div>
+                    </div>
+                    <!-- Path 2: Sudden Shedding -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-full bg-gray-700 p-4 rounded-lg border border-gray-600"><h3 class="font-semibold text-white">Sudden, diffuse, heavy shedding</h3></div>
+                        <div class="text-5xl text-gray-600 my-4">↓</div>
+                        <div class="w-full bg-amber-900/50 text-amber-300 p-4 rounded-lg shadow-md border border-amber-500/30"><p class="font-bold">Suggests: TE</p><p class="text-xs mt-1">(Telogen Effluvium)</p></div>
+                    </div>
+                    <!-- Path 3: Bald Patches -->
+                    <div class="flex flex-col items-center text-center">
+                         <div class="w-full bg-gray-700 p-4 rounded-lg border border-gray-600"><h3 class="font-semibold text-white">Smooth, round bald patches</h3></div>
+                        <div class="text-5xl text-gray-600 my-4">↓</div>
+                        <div class="w-full bg-purple-900/50 text-purple-300 p-4 rounded-lg shadow-md border border-purple-500/30"><p class="font-bold">Suggests: AA</p><p class="text-xs mt-1">(Alopecia Areata)</p></div>
+                    </div>
+                    <!-- Path 4: Receding Hairline + Eyebrows -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-full bg-gray-700 p-4 rounded-lg border border-gray-600"><h3 class="font-semibold text-white">Receding hairline &/ eyebrow</h3></div>
+                        <div class="text-5xl text-gray-600 my-4">↓</div>
+                        <div class="w-full bg-red-900/50 text-red-300 p-4 rounded-lg shadow-md border border-red-500/30"><p class="font-bold">Suggests: FFA</p><p class="text-xs mt-1">(A Scarring Alopecia)</p></div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-700">
+                <h2 class="text-3xl font-bold text-white mb-4 text-center">The Comprehensive Clinical Diagnostic Pathway</h2>
+                <p class="text-gray-400 mb-10 max-w-4xl mx-auto text-center">A definitive diagnosis is not a single event but a systematic process. It begins with the patient's story and progresses through specialized tests to pinpoint the precise cause.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-0">
+                    <div class="flowchart-node"><div class="bg-gray-700 p-6 rounded-lg h-full"><div class="flex items-center mb-3"><span class="text-3xl mr-3">1️⃣</span><h3 class="font-bold text-white text-lg">Clinical Assessment</h3></div><p class="text-xs text-gray-400">Detailed history of onset, triggers (illness, meds), family history. Physical exam with hair pull test.</p></div></div>
+                    <div class="flowchart-node"><div class="bg-gray-700 p-6 rounded-lg h-full"><div class="flex items-center mb-3"><span class="text-3xl mr-3">2️⃣</span><h3 class="font-bold text-white text-lg">Laboratory Workup</h3></div><p class="text-xs text-gray-400">Key blood tests: CBC, Ferritin (>40), TSH, Free T4, Vitamin D (>30), DHEAS, Testosterone, ANA.</p></div></div>
+                    <div class="flowchart-node"><div class="bg-gray-700 p-6 rounded-lg h-full"><div class="flex items-center mb-3"><span class="text-3xl mr-3">3️⃣</span><h3 class="font-bold text-white text-lg">Trichoscopy</h3></div><p class="text-xs text-gray-400">Dermoscopy to see miniaturization (FPHL), "exclamation mark" hairs (AA), or loss of follicles (scarring).</p></div></div>
+                    <div class="flowchart-node"><div class="bg-gray-700 p-6 rounded-lg h-full"><div class="flex items-center mb-3"><span class="text-3xl mr-3">4️⃣</span><h3 class="font-bold text-white text-lg">Scalp Biopsy</h3></div><p class="text-xs text-gray-400">Essential to confirm diagnosis in suspected scarring alopecia by examining inflammation and fibrosis.</p></div></div>
+                </div>
+            </section>
+
+            <section class="bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-700">
+                <h2 class="text-3xl font-bold text-white mb-4 text-center">Advanced Treatment Landscape</h2>
+                <p class="text-gray-400 mb-10 max-w-4xl mx-auto text-center">Treatment is highly specific to the diagnosis. For non-scarring alopecias, the goal is to halt progression and stimulate regrowth. For scarring alopecias, it is to stop inflammation and prevent permanent loss.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-400">
+                        <thead class="text-xs text-gray-200 uppercase bg-gray-700">
+                            <tr>
+                                <th scope="col" class="px-6 py-4">Condition</th>
+                                <th scope="col" class="px-6 py-4">Therapies</th>
+                                <th scope="col" class="px-6 py-4">Evidence & Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-gray-800 border-b border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">FPHL</th>
+                                <td class="px-6 py-4">Topical Minoxidil (5%), Oral Spironolactone/Finasteride, PRP, LLLT, Microneedling</td>
+                                <td class="px-6 py-4">Combination therapy is most effective. Emerging: Clascoterone (topical anti-androgen).</td>
+                            </tr>
+                            <tr class="bg-gray-800 border-b border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Telogen Effluvium</th>
+                                <td class="px-6 py-4">Address trigger (stress, nutrition, illness), Stress Management, Nutritional Support</td>
+                                <td class="px-6 py-4">Self-resolving in 6-12 months once trigger is managed. Minoxidil may speed recovery.</td>
+                            </tr>
+                            <tr class="bg-gray-800 border-b border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Alopecia Areata</th>
+                                <td class="px-6 py-4">Corticosteroids (Injected/Topical), JAK Inhibitors (Baricitinib, Ritlecitinib)</td>
+                                <td class="px-6 py-4">JAK inhibitors show >60% regrowth in severe cases. First-line for patchy AA is intralesional steroids.</td>
+                            </tr>
+                            <tr class="bg-gray-800">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Scarring Alopecias</th>
+                                <td class="px-6 py-4">Corticosteroids, Hydroxychloroquine, Doxycycline, Dutasteride</td>
+                                <td class="px-6 py-4">Early treatment is critical to halt irreversible follicular destruction.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+             <section class="bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-700">
+                <h2 class="text-3xl font-bold text-white mb-4 text-center">The Psychological Impact</h2>
+                <p class="text-gray-400 mb-10 max-w-4xl mx-auto text-center">The emotional distress associated with hair loss is significant and must be addressed as part of a holistic treatment plan.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-900 border border-gray-700 p-8 rounded-lg text-center">
+                        <p class="text-7xl font-bold text-fuchsia-500 glow-magenta">~60%</p>
+                        <h3 class="text-xl font-semibold text-white mt-4">Experience Low Self-Esteem</h3>
+                        <p class="text-sm text-gray-400 mt-2">Studies show a majority of women with hair loss report significant impacts on self-image, confidence, and social interactions.</p>
+                    </div>
+                     <div class="bg-gray-900 border border-gray-700 p-8 rounded-lg text-center">
+                        <p class="text-7xl font-bold text-cyan-400">🫂</p>
+                        <h3 class="text-xl font-semibold text-white mt-4">Support is Crucial</h3>
+                        <p class="text-sm text-gray-400 mt-2">Referrals to mental health providers or support groups can mitigate anxiety and social detachment, improving overall quality of life.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-16 border-t border-gray-700 pt-8">
+             <h2 class="text-3xl font-bold text-white mb-4">Key Clinical Insights</h2>
+            <p class="text-gray-400 max-w-4xl mx-auto">An accurate diagnosis is paramount. The modern paradigm integrates clinical skill, trichoscopy, and lab work to form a precise diagnosis. Effective management requires a holistic plan that not only treats the scalp but also addresses the profound psychological impact of hair loss to ensure patient well-being.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+
+            const commonChartOptions = (textColor) => ({
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: textColor,
+                            padding: 20,
+                            font: { size: 12, family: 'Inter' }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: { title: tooltipTitleCallback },
+                        backgroundColor: '#030712',
+                        titleColor: '#E5E7EB',
+                        bodyColor: '#D1D5DB',
+                        borderColor: '#374151',
+                        borderWidth: 1,
+                        titleFont: { size: 14, family: 'Inter', weight: 'bold' },
+                        bodyFont: { size: 12, family: 'Inter' },
+                        padding: 12,
+                        cornerRadius: 4
+                    }
+                }
+            });
+
+            const prevalenceCtx = document.getElementById('prevalenceChart').getContext('2d');
+            new Chart(prevalenceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Androgenetic Alopecia (FPHL)', ['Telogen Effluvium', '(TE)'], 'Alopecia Areata (AA)', 'Scarring Alopecias'],
+                    datasets: [{
+                        label: 'Relative Frequency',
+                        data: [65, 20, 10, 5],
+                        backgroundColor: ['#3B82F6', '#FBBF24', '#10B981', '#F87171'],
+                        borderColor: '#1f2937',
+                        borderWidth: 4
+                    }]
+                },
+                options: { ...commonChartOptions('#D1D5DB'), cutout: '60%' }
+            });
+
+            const nonScarringFeaturesCtx = document.getElementById('nonScarringFeaturesChart').getContext('2d');
+            new Chart(nonScarringFeaturesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Shedding Pattern', 'Key Symptom', 'Diagnostic Clue'],
+                    datasets: [
+                        {
+                            label: 'FPHL',
+                            data: [2, 1, 3], 
+                            backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                            borderColor: '#3B82F6',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'TE',
+                            data: [3, 1, 2],
+                            backgroundColor: 'rgba(251, 191, 36, 0.7)',
+                            borderColor: '#FBBF24',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'AA',
+                            data: [1, 2, 3], 
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                            borderColor: '#10B981',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    ...commonChartOptions('#D1D5DB'),
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: {
+                                color: '#9CA3AF',
+                                callback: function(value) {
+                                    const labels = ['Low/Gradual', 'Variable/Patchy', 'High/Acute'];
+                                    return labels[value-1] || '';
+                                }
+                            }
+                        },
+                        x: {
+                           grid: { display: false },
+                           ticks: { color: '#9CA3AF' }
+                        }
+                    },
+                     plugins: {
+                        legend: { position: 'top', labels: { color: '#D1D5DB' } },
+                        tooltip: {
+                            ...commonChartOptions('#D1D5DB').plugins.tooltip,
+                            callbacks: {
+                                label: function(context) {
+                                    const tooltips = {
+                                        'Shedding Pattern': {'FPHL': 'Gradual Thinning', 'TE': 'Acute, Profuse Shedding', 'AA': 'Patchy Loss'},
+                                        'Key Symptom': {'FPHL': 'Typically Asymptomatic', 'TE': 'Typically Asymptomatic', 'AA': 'Can have itching/tingling'},
+                                        'Diagnostic Clue': {'FPHL': 'Hair Diameter Variability', 'TE': 'Positive Pull Test', 'AA': '"Exclamation Point" Hairs'},
+                                    };
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    const category = context.chart.data.labels[context.dataIndex];
+                                    label += tooltips[category][context.dataset.label];
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

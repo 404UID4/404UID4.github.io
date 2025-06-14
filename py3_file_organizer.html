@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Documentation | Python File Organizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Dark Theme (Zinc, Amber) -->
+    <!-- Application Structure Plan: A single-page application with a sticky sidebar navigation for instant access to key sections. The structure is designed to guide the user from a high-level overview to practical examples, and finally to a detailed, interactive reference. This non-linear, section-based approach is superior to a flat README because it allows users to jump directly to the information they need, which is crucial for technical documentation. The core interaction is a filterable, searchable command-line argument reference, which turns a static table into a powerful lookup tool. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Command-Line Arguments Table -> Goal: Organize, Reference -> Viz/Presentation Method: Interactive, searchable table -> Interaction: Live text search and category filtering -> Justification: Transforms a dense data table into a highly usable, quick-reference tool, which is the primary need for a user of a CLI tool. Library/Method: Vanilla JS, Tailwind CSS.
+        - Report Info: Usage Examples -> Goal: Teach, Demonstrate -> Viz/Presentation Method: Interactive "recipe" cards feeding a mock terminal display -> Interaction: Click on a card to see the command; click to copy. -> Justification: Interactive learning is more engaging and effective than reading static code blocks. It provides immediate, actionable commands. Library/Method: Vanilla JS, Tailwind CSS.
+        - Report Info: Key Features -> Goal: Inform, Organize -> Viz/Presentation Method: Grid of feature cards with icons -> Interaction: Static -> Justification: Breaks up a bulleted list into more visually scannable and digestible components. Library/Method: HTML/CSS, Unicode icons.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #18181b; /* zinc-900 */
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+        .font-fira-code {
+            font-family: 'Fira Code', monospace;
+        }
+        #top-nav .nav-link.active {
+            background-color: #09090b; /* zinc-950 */
+            color: #ffffff;
+        }
+        .table-row-enter {
+            animation: fade-slide-in 0.3s ease-out forwards;
+        }
+        .recipe-card.active {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border-color: #f59e0b; /* amber-500 */
+        }
+        .filter-btn.active {
+            background-color: #f59e0b;
+            color: #18181b;
+            border-color: #f59e0b;
+        }
+        @keyframes fade-slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-zinc-900 text-slate-300 antialiased">
+
+    <!-- Header & Top Bar Navigation -->
+    <header class="w-full bg-zinc-950/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm border-b border-zinc-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Title -->
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-amber-400">File Organizer</h1>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav id="top-nav" class="hidden md:flex items-center space-x-2">
+                    <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-zinc-800 hover:text-white transition-colors duration-200">Overview</a>
+                    <a href="#features" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-zinc-800 hover:text-white transition-colors duration-200">Features</a>
+                    <a href="#usage" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-zinc-800 hover:text-white transition-colors duration-200">Examples</a>
+                    <a href="#cli" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-zinc-800 hover:text-white transition-colors duration-200">CLI Reference</a>
+                    <a href="#config" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-zinc-800 hover:text-white transition-colors duration-200">Config</a>
+                    <a href="#safety" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-zinc-800 hover:text-white transition-colors duration-200">Safety</a>
+                </nav>
+
+                <!-- Mobile Navigation -->
+                <div class="md:hidden">
+                    <select id="mobile-nav-select" class="bg-zinc-800 border-zinc-700 text-white rounded-md p-2 text-sm focus:ring-amber-500 focus:border-amber-500">
+                        <option value="#overview">Overview</option>
+                        <option value="#features">Features</option>
+                        <option value="#usage">Examples</option>
+                        <option value="#cli">CLI Reference</option>
+                        <option value="#config">Configuration</option>
+                        <option value="#safety">Safety & Auditing</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+
+        <!-- Section 1: Overview -->
+        <section id="overview" class="mb-24 scroll-mt-24">
+            <h2 class="text-5xl font-bold mb-4 tracking-tight text-white">Python File Organizer</h2>
+            <p class="text-lg text-slate-400 mb-10">An interactive guide to the robust, concurrent, and safety-engineered Python utility designed to bring order to your files.</p>
+            
+            <div class="bg-zinc-800/50 p-6 sm:p-8 rounded-2xl border border-zinc-800">
+                <h3 class="text-2xl font-semibold mb-6 text-white">Objective & Purpose</h3>
+                <p class="mb-8 text-slate-400 leading-relaxed">The primary goal of this script is to automate the tedious and error-prone task of sorting files. It transforms chaotic directories (like a `Downloads` folder) into organized collections by moving files into subdirectories named after their extensions. This interactive application is designed to help you master the script's capabilities quickly and efficiently.</p>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800"><div class="text-4xl mb-2" aria-hidden="true">🛡️</div><h4 class="font-semibold text-lg mb-1 text-white">Safety First</h4><p class="text-sm text-slate-400">Built with features like dry-runs and verified backups to ensure your data is always safe.</p></div>
+                    <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800"><div class="text-4xl mb-2" aria-hidden="true">⚡️</div><h4 class="font-semibold text-lg mb-1 text-white">Efficient & Fast</h4><p class="text-sm text-slate-400">Leverages concurrency to organize thousands of files in a fraction of the time.</p></div>
+                    <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800"><div class="text-4xl mb-2" aria-hidden="true">⚙️</div><h4 class="font-semibold text-lg mb-1 text-white">Highly Flexible</h4><p class="text-sm text-slate-400">A rich set of CLI options and a config file allow you to tailor its behavior to your needs.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Key Features -->
+        <section id="features" class="mb-24 scroll-mt-24">
+            <h2 class="text-4xl font-bold mb-4 tracking-tight text-white">Key Features</h2>
+            <p class="mb-10 text-slate-400">This section provides a scannable overview of the script's main capabilities.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800 hover:border-amber-500/50 transition-colors duration-300"><h4 class="font-semibold text-xl mb-2 text-white">📦 Intelligent Sorting</h4><p>Organizes files into folders based on their extension, with built-in support for compound extensions like `.tar.gz`.</p></div>
+                <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800 hover:border-amber-500/50 transition-colors duration-300"><h4 class="font-semibold text-xl mb-2 text-white">💨 Concurrent Processing</h4><p>Uses a thread pool to process multiple files in parallel, dramatically improving speed.</p></div>
+                <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800 hover:border-amber-500/50 transition-colors duration-300"><h4 class="font-semibold text-xl mb-2 text-white">🔬 Dry Run Mode</h4><p>Preview every file operation and see what changes would be made without modifying any files.</p></div>
+                <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800 hover:border-amber-500/50 transition-colors duration-300"><h4 class="font-semibold text-xl mb-2 text-white">💾 Verified Backups</h4><p>Optionally create a timestamped, size-verified backup of all files before any move operations occur.</p></div>
+                <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800 hover:border-amber-500/50 transition-colors duration-300"><h4 class="font-semibold text-xl mb-2 text-white">🤝 Conflict Resolution</h4><p>Automatically handles filename conflicts by appending a numeric suffix (e.g., `file_1.txt`).</p></div>
+                <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800 hover:border-amber-500/50 transition-colors duration-300"><h4 class="font-semibold text-xl mb-2 text-white">🔌 Custom Configuration</h4><p>Use a simple config file (`~/.file_organizer_rc`) to define your own custom compound extensions.</p></div>
+            </div>
+        </section>
+
+        <!-- Section 3: Usage Examples -->
+        <section id="usage" class="mb-24 scroll-mt-24">
+            <h2 class="text-4xl font-bold mb-4 tracking-tight text-white">Interactive Usage Examples</h2>
+            <p class="mb-10 text-slate-400">Learn by doing. Select a common use-case to see the full command in the mock terminal below.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="example-recipes"></div>
+            <div class="bg-zinc-950 rounded-xl shadow-lg p-4 border border-zinc-800">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-zinc-700 rounded-full"></span><span class="w-3 h-3 bg-zinc-700 rounded-full"></span><span class="w-3 h-3 bg-zinc-700 rounded-full"></span></div>
+                    <button id="copy-command-btn" class="text-xs text-slate-400 hover:text-white transition-colors bg-zinc-700 px-3 py-1 rounded-md">Copy</button>
+                </div>
+                <div class="font-fira-code text-green-400"><span>$&nbsp;</span><span id="terminal-command"></span></div>
+            </div>
+        </section>
+
+        <!-- Section 4: CLI Reference -->
+        <section id="cli" class="mb-24 scroll-mt-24">
+            <h2 class="text-4xl font-bold mb-4 tracking-tight text-white">Interactive CLI Reference</h2>
+            <p class="mb-10 text-slate-400">A complete, interactive reference for every command-line argument. Use the search and filter options to quickly find the flag you need.</p>
+            <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800">
+                <div class="flex flex-col md:flex-row gap-4 mb-6"><input type="text" id="search-args" placeholder="Search arguments..." class="w-full md:w-1/3 px-4 py-2 border bg-zinc-900 border-zinc-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none transition-shadow text-white"><div id="filter-btns" class="flex flex-wrap gap-2"></div></div>
+                <div class="overflow-x-auto"><table class="w-full text-left"><thead class="border-b-2 border-zinc-700"><tr class="text-white"><th class="p-4 font-semibold">Argument</th><th class="p-4 font-semibold hidden md:table-cell">Shorthand</th><th class="p-4 font-semibold">Description</th></tr></thead><tbody id="cli-table-body"></tbody></table><p id="no-results" class="text-center p-8 text-slate-500 hidden">No arguments match your search.</p></div>
+            </div>
+        </section>
+        
+        <!-- Section 5: Configuration -->
+        <section id="config" class="mb-24 scroll-mt-24">
+            <h2 class="text-4xl font-bold mb-4 tracking-tight text-white">Configuration File</h2>
+            <p class="mb-10 text-slate-400">For persistent settings, create a configuration file to set preferences across all uses.</p>
+            <div class="bg-zinc-800/50 p-8 rounded-2xl border border-zinc-800">
+                <p class="mb-4">Create a file named <code class="font-fira-code bg-zinc-900 text-slate-300 px-2 py-1 rounded">.file_organizer_rc</code> in your home directory (`~/`). The script will automatically load this file if it exists.</p>
+                <h4 class="font-semibold text-lg mb-2 text-white">Example `~/.file_organizer_rc` file:</h4>
+                <div class="bg-zinc-950 rounded-xl shadow-lg p-4 border border-zinc-800"><pre><code class="font-fira-code text-sky-400"># This is a comment.
+# Define custom compound extensions for your workflow.
+
+blade.php = blade.php
+component.html = component.html
+</code></pre></div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Safety -->
+        <section id="safety" class="scroll-mt-24">
+            <h2 class="text-4xl font-bold mb-4 tracking-tight text-white">Safety & Auditing</h2>
+            <p class="mb-10 text-slate-400">Data integrity is the top priority. The script includes multiple layers of protection and logging.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800">
+                    <h4 class="font-semibold text-xl mb-4 text-white">🛡️ Core Safety Features</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start"><span class="mr-3 mt-1 text-amber-500 font-bold">●</span><div><strong class="font-semibold text-white">Safe Defaults:</strong> Operates non-recursively and case-sensitively by default to prevent unintended actions.</div></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 text-amber-500 font-bold">●</span><div><strong class="font-semibold text-white">Dry-Run Mode:</strong> Use `--dry-run` to perform a trial run without moving any files. This is the most important safety tool.</div></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 text-amber-500 font-bold">●</span><div><strong class="font-semibold text-white">Git Protection:</strong> The `--cleanup-empty-dirs` feature will NOT delete any directory that is part of a Git repository.</div></li>
+                    </ul>
+                </div>
+                <div class="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-800">
+                    <h4 class="font-semibold text-xl mb-4 text-white">🗂️ Logging & Backups</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start"><span class="mr-3 mt-1 text-sky-500 font-bold">●</span><div><strong class="font-semibold text-white">Verbose Logs:</strong> Use `--verbose` to create a detailed, timestamped log file of every action.</div></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 text-sky-500 font-bold">●</span><div><strong class="font-semibold text-white">Timestamped Backups:</strong> Use `--backup` to create a complete, verified copy of all files before they are moved.</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cliArgs = [
+                { name: 'source_dir', shorthand: '', description: 'The directory to organize.', default: 'Current directory', category: 'core' },
+                { name: '--output-dir', shorthand: '-o', description: 'Directory to move organized files into.', default: 'The source directory', category: 'core' },
+                { name: '--dry-run', shorthand: '', description: 'Preview moves without executing.', default: 'False', category: 'safety' },
+                { name: '--recursive', shorthand: '-r', description: 'Process directories recursively.', default: 'False', category: 'behavior' },
+                { name: '--case-insensitive', shorthand: '', description: 'Treat extensions as case-insensitive (e.g., JPG -> jpg).', default: 'False', category: 'behavior' },
+                { name: '--include-hidden', shorthand: '', description: 'Include hidden files (dotfiles).', default: 'False', category: 'behavior' },
+                { name: '--confirm', shorthand: '', description: 'Prompt for confirmation before each move.', default: 'False', category: 'safety' },
+                { name: '--yes', shorthand: '-y', description: 'Auto-confirm all moves (overrides --confirm).', default: 'False', category: 'safety' },
+                { name: '--backup', shorthand: '', description: 'Create backups of files before moving.', default: 'False', category: 'safety' },
+                { name: '--exclude-macos', shorthand: '', description: 'Exclude macOS-specific files (e.g., .DS_Store).', default: 'True', category: 'behavior' },
+                { name: '--include-macos', shorthand: '', description: 'Include macOS-specific files.', default: 'False', category: 'behavior' },
+                { name: '--cleanup-empty-dirs', shorthand: '', description: '[DANGEROUS] Delete empty source directories after moving.', default: 'False', category: 'danger' },
+                { name: '--verbose', shorthand: '-v', description: 'Log all actions to a verbose log file.', default: 'False', category: 'output' },
+                { name: '--no-progress', shorthand: '', description: 'Disable the real-time progress counter.', default: 'False', category: 'output' },
+                { name: '--parallel', shorthand: '-p', description: 'Number of parallel jobs. 0 for auto-detect cores.', default: '1', category: 'performance' }
+            ];
+            const recipes = [
+                { title: 'Preview an Organization', command: 'python organizer.py ~/Downloads --dry-run' },
+                { title: 'Recursive Scan with Backup', command: 'python organizer.py ~/Documents --recursive --backup --parallel 4' },
+                { title: 'Simple In-Place Sort', command: 'python organizer.py --yes' },
+                { title: 'Sort into a New Folder', command: 'python organizer.py ~/Downloads -o ~/Documents/Sorted' },
+            ];
+            const categories = {
+                core: { label: 'Core', color: 'bg-blue-900/50 text-blue-300 border border-blue-800/50' },
+                safety: { label: 'Safety', color: 'bg-green-900/50 text-green-300 border border-green-800/50' },
+                behavior: { label: 'Behavior', color: 'bg-indigo-900/50 text-indigo-300 border border-indigo-800/50' },
+                output: { label: 'Output', color: 'bg-slate-700 text-slate-300 border border-slate-600' },
+                performance: { label: 'Performance', color: 'bg-amber-900/50 text-amber-300 border border-amber-800/50' },
+                danger: { label: 'Dangerous', color: 'bg-red-900/50 text-red-300 border border-red-800/50' },
+            };
+
+            const tableBody = document.getElementById('cli-table-body');
+            const searchInput = document.getElementById('search-args');
+            const filterBtnsContainer = document.getElementById('filter-btns');
+            const noResultsP = document.getElementById('no-results');
+            const recipesContainer = document.getElementById('example-recipes');
+            const terminalCommandEl = document.getElementById('terminal-command');
+            const copyCommandBtn = document.getElementById('copy-command-btn');
+            const mobileNavSelect = document.getElementById('mobile-nav-select');
+            let activeFilter = 'all';
+
+            const renderTable = (args) => {
+                tableBody.innerHTML = '';
+                noResultsP.classList.toggle('hidden', args.length > 0);
+                args.forEach(arg => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-zinc-800 hover:bg-zinc-800/50 cursor-pointer table-row-enter';
+                    row.innerHTML = `<td class="p-4 font-semibold font-fira-code text-white">${arg.name}</td><td class="p-4 hidden md:table-cell font-fira-code text-slate-500">${arg.shorthand || '—'}</td><td class="p-4 text-slate-400">${arg.description.replace('[DANGEROUS]', '')}</td>`;
+                    const detailRow = document.createElement('tr');
+                    detailRow.className = 'hidden';
+                    detailRow.innerHTML = `<td colspan="3" class="p-4 bg-zinc-900"><div class="flex flex-col sm:flex-row justify-between text-sm"><div><strong class="text-slate-200">Default:</strong> <span class="font-fira-code text-slate-400">${arg.default}</span></div><div><strong class="text-slate-200">Category:</strong> <span class="px-2 py-1 rounded-full text-xs font-semibold ${categories[arg.category].color}">${categories[arg.category].label}</span></div></div>${arg.name === '--cleanup-empty-dirs' ? '<div class="mt-3 text-sm text-red-300 bg-red-900/50 p-3 rounded-lg border border-red-800/50"><strong>Warning:</strong> This permanently deletes directories. Use with extreme caution.</div>' : ''}</td>`;
+                    row.addEventListener('click', () => { detailRow.classList.toggle('hidden'); row.classList.toggle('bg-zinc-800/50'); });
+                    tableBody.appendChild(row);
+                    tableBody.appendChild(detailRow);
+                });
+            };
+
+            const renderFilterButtons = () => {
+                let buttonsHTML = '<button data-filter="all" class="filter-btn active px-3 py-1 rounded-full text-sm font-semibold">All</button>';
+                Object.keys(categories).forEach(key => { buttonsHTML += `<button data-filter="${key}" class="filter-btn bg-zinc-800 text-slate-300 px-3 py-1 rounded-full text-sm font-semibold border border-zinc-700 hover:bg-zinc-700 transition-colors">${categories[key].label}</button>`; });
+                filterBtnsContainer.innerHTML = buttonsHTML;
+            };
+
+            const renderRecipes = () => {
+                recipesContainer.innerHTML = recipes.map(recipe => `<div class="recipe-card cursor-pointer bg-zinc-800/50 p-4 rounded-xl border-2 border-zinc-800 hover:border-amber-500/50 transition-all" data-command="${recipe.command}"><h5 class="font-semibold text-center text-white">${recipe.title}</h5></div>`).join('');
+                const firstCard = recipesContainer.querySelector('.recipe-card');
+                if (firstCard) { firstCard.classList.add('active'); terminalCommandEl.textContent = firstCard.dataset.command; }
+            };
+            
+            const handleFilter = () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredArgs = cliArgs.filter(arg => (arg.name.toLowerCase().includes(searchTerm) || arg.description.toLowerCase().includes(searchTerm)) && (activeFilter === 'all' || arg.category === activeFilter));
+                renderTable(filteredArgs);
+            };
+            
+            filterBtnsContainer.addEventListener('click', e => {
+                if (e.target.matches('.filter-btn')) {
+                    document.querySelectorAll('.filter-btn').forEach(btn => { btn.classList.remove('active'); btn.classList.add('bg-zinc-800', 'text-slate-300', 'border', 'border-zinc-700'); });
+                    e.target.classList.add('active');
+                    e.target.classList.remove('bg-zinc-800', 'text-slate-300', 'border', 'border-zinc-700');
+                    activeFilter = e.target.dataset.filter;
+                    handleFilter();
+                }
+            });
+
+            recipesContainer.addEventListener('click', e => {
+                const card = e.target.closest('.recipe-card');
+                if (card) { document.querySelectorAll('.recipe-card').forEach(c => c.classList.remove('active')); card.classList.add('active'); terminalCommandEl.textContent = card.dataset.command; }
+            });
+
+            copyCommandBtn.addEventListener('click', () => {
+                const commandText = terminalCommandEl.textContent;
+                const textArea = document.createElement("textarea");
+                textArea.value = commandText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try { document.execCommand('copy'); copyCommandBtn.textContent = 'Copied!'; setTimeout(() => { copyCommandBtn.textContent = 'Copy'; }, 2000); } catch (err) { console.error('Failed to copy text: ', err); }
+                document.body.removeChild(textArea);
+            });
+            
+            searchInput.addEventListener('input', handleFilter);
+
+            const desktopNavLinks = document.querySelectorAll('#top-nav .nav-link');
+            const sections = Array.from(document.querySelectorAll('main section'));
+            
+            const updateActiveLink = () => {
+                let currentSectionId = '';
+                sections.forEach(section => { if (window.scrollY >= section.offsetTop - 100) { currentSectionId = section.getAttribute('id'); } });
+                desktopNavLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === `#${currentSectionId}`) { link.classList.add('active'); } });
+                if (mobileNavSelect.value !== `#${currentSectionId}`) { mobileNavSelect.value = `#${currentSectionId}`; }
+            };
+            
+            mobileNavSelect.addEventListener('change', e => { document.querySelector(e.target.value).scrollIntoView({behavior: 'smooth'}); });
+            window.addEventListener('scroll', updateActiveLink);
+
+            renderTable(cliArgs);
+            renderFilterButtons();
+            renderRecipes();
+            updateActiveLink();
+        });
+    </script>
+</body>
+</html>

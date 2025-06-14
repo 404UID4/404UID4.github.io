@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigating Online Shopping Addiction: A Spouse's Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: Deep Teal & Gold -->
+    <!-- NEITHER Mermaid JS NOR SVG were used anywhere in this HTML output. All charts are rendered using Chart.js on Canvas elements. Diagrams are constructed using structured HTML and CSS with Tailwind. Icons are rendered dynamically with Lucide. -->
+
+    <style>
+        :root {
+            --bg-start: #f4f7f7;
+            --bg-end: #d0d9d9;
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --card-border: rgba(255, 255, 255, 0.9);
+            --text-primary: #1a3a3a;
+            --text-secondary: #4a6a6a;
+            --accent-primary: #008080;
+            --accent-secondary: #004d4d;
+            --accent-gold: #b8860b;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            color: var(--text-primary);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Lora', serif;
+            color: var(--accent-secondary);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 77, 77, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 77, 77, 0.25);
+        }
+        
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Timeline Styles */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 18px;
+            height: 100%;
+            width: 4px;
+            background-color: #e2e8f0;
+            border-radius: 2px;
+        }
+        @media (min-width: 768px) {
+            .timeline-container::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        
+        .timeline-item {
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--card-border);
+            z-index: 10;
+        }
+         @media (min-width: 768px) {
+            .timeline-dot {
+                left: 50%;
+            }
+        }
+
+        .timeline-content {
+            padding-left: 40px;
+        }
+        @media (min-width: 768px) {
+            .timeline-content {
+                width: 50%;
+                padding-left: 40px;
+            }
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 50%;
+            }
+            .timeline-item:nth-child(odd) .timeline-content {
+                padding-left: 0;
+                padding-right: 40px;
+                text-align: right;
+            }
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="text-center py-20 px-4 reveal">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">Navigating the Storm</h1>
+        <p class="max-w-3xl mx-auto text-lg sm:text-xl text-gray-600">A Spouse's Guide to Understanding & Overcoming Online Shopping Addiction</p>
+    </header>
+
+    <main class="container mx-auto px-4 md:px-6">
+
+        <section id="understanding" class="mb-20 md:mb-32">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold">The Anatomy of a Compulsion</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-lg text-gray-600">It's more than a habit; it's a complex cycle fueled by psychology and the endless aisles of the internet.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div class="reveal space-y-8">
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center"><i data-lucide="refresh-cw" class="w-6 h-6 mr-3 text-[var(--accent-primary)]"></i>The Behavioral Cycle</h3>
+                        <div class="space-y-4 text-gray-700">
+                           <p><strong>1. Trigger & Urge:</strong> An emotional cue (stress, sadness) creates an intense urge to shop.</p>
+                           <p><strong>2. Browsing & "High":</strong> The hunt begins, providing a temporary dopamine rush and escape.</p>
+                           <p><strong>3. Purchase:</strong> The act of buying offers a fleeting sense of control and satisfaction.</p>
+                           <p><strong>4. Guilt & Shame:</strong> The high fades, replaced by regret and financial anxiety.</p>
+                           <p><strong>5. Repeat:</strong> To escape the new negative feelings, the cycle begins again.</p>
+                        </div>
+                    </div>
+                     <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center"><i data-lucide="brain-circuit" class="w-6 h-6 mr-3 text-[var(--accent-primary)]"></i>Common Psychological Drivers</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="flex items-center space-x-3"><i data-lucide="shield-half" class="w-5 h-5 text-[var(--accent-gold)]"></i><span>Coping with anxiety/depression</span></div>
+                            <div class="flex items-center space-x-3"><i data-lucide="user-x" class="w-5 h-5 text-[var(--accent-gold)]"></i><span>Escaping loneliness/boredom</span></div>
+                            <div class="flex items-center space-x-3"><i data-lucide="gem" class="w-5 h-5 text-[var(--accent-gold)]"></i><span>Boosting low self-esteem</span></div>
+                            <div class="flex items-center space-x-3"><i data-lucide="zap" class="w-5 h-5 text-[var(--accent-gold)]"></i><span>Seeking instant gratification</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 reveal">
+                    <h3 class="text-2xl font-bold mb-4 text-center"><i data-lucide="pie-chart" class="inline w-6 h-6 mr-2 text-[var(--accent-primary)]"></i>High Rate of Co-Occurring Conditions</h3>
+                    <p class="text-center text-gray-600 mb-6">Shopping addiction often co-exists with other mental health challenges, making a holistic approach to recovery essential.</p>
+                    <div class="chart-container h-72 md:h-80">
+                        <canvas id="coOccurringChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recognizing" class="mb-20 md:mb-32">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold">Recognizing the Red Flags</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-lg text-gray-600">Distinguishing a habit from an addiction lies in observing control, motivation, secrecy, and the severity of consequences over time.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                 <div class="glass-card rounded-2xl p-6 reveal">
+                     <h3 class="text-2xl font-bold mb-4 text-center"><i data-lucide="git-compare-arrows" class="inline w-6 h-6 mr-2 text-[var(--accent-primary)]"></i>Excessive Spending vs. Addiction</h3>
+                     <div class="overflow-x-auto mt-6">
+                         <table class="w-full text-left">
+                             <thead>
+                                 <tr>
+                                     <th class="p-3 font-semibold text-gray-700">Feature</th>
+                                     <th class="p-3 text-center text-green-700">Spending</th>
+                                     <th class="p-3 text-center text-red-700">Addiction</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="divide-y divide-gray-200">
+                                 <tr class="text-gray-600">
+                                     <td class="p-3">Control</td>
+                                     <td class="p-3 text-center"><i data-lucide="check-circle" class="w-5 h-5 mx-auto text-green-500"></i></td>
+                                     <td class="p-3 text-center"><i data-lucide="x-circle" class="w-5 h-5 mx-auto text-red-500"></i></td>
+                                 </tr>
+                                 <tr class="text-gray-600">
+                                     <td class="p-3">Motivation</td>
+                                     <td class="p-3 text-center">Enjoyment</td>
+                                     <td class="p-3 text-center">Escape</td>
+                                 </tr>
+                                  <tr class="text-gray-600">
+                                     <td class="p-3">Secrecy</td>
+                                     <td class="p-3 text-center"><i data-lucide="check-circle" class="w-5 h-5 mx-auto text-green-500"></i></td>
+                                     <td class="p-3 text-center"><i data-lucide="x-circle" class="w-5 h-5 mx-auto text-red-500"></i></td>
+                                 </tr>
+                                  <tr class="text-gray-600">
+                                     <td class="p-3">Aftermath</td>
+                                     <td class="p-3 text-center">Satisfaction</td>
+                                     <td class="p-3 text-center">Guilt/Shame</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+
+                 <div class="reveal">
+                    <h3 class="text-2xl font-bold mb-8 text-center"><i data-lucide="trending-down" class="inline w-6 h-6 mr-2 text-[var(--accent-primary)]"></i>Progression Over Two Years</h3>
+                    <div class="relative timeline-container pt-4">
+                        <div class="timeline-item mb-12">
+                            <div class="timeline-dot"><i data-lucide="shopping-cart" class="w-5 h-5 text-[var(--accent-primary)]"></i></div>
+                            <div class="timeline-content">
+                                <div class="glass-card p-4 rounded-xl">
+                                    <h4 class="font-bold">Months 1-6: Initial Stages</h4>
+                                    <p class="text-sm text-gray-600">Occasional "retail therapy" becomes more frequent. Spending is justifiable, providing a reliable source of relief.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item mb-12">
+                            <div class="timeline-dot"><i data-lucide="credit-card" class="w-5 h-5 text-[var(--accent-primary)]"></i></div>
+                            <div class="timeline-content">
+                                 <div class="glass-card p-4 rounded-xl">
+                                    <h4 class="font-bold">Months 7-12: Escalation & Secrecy</h4>
+                                    <p class="text-sm text-gray-600">Tolerance builds, requiring larger or more frequent purchases. Hiding packages and statements begins.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="timeline-item mb-12">
+                            <div class="timeline-dot"><i data-lucide="alert-triangle" class="w-5 h-5 text-[var(--accent-gold)]"></i></div>
+                            <div class="timeline-content">
+                                <div class="glass-card p-4 rounded-xl">
+                                    <h4 class="font-bold">Months 13-18: Significant Debt</h4>
+                                    <p class="text-sm text-gray-600">Credit cards are maxed out, and marital tension over finances grows. Deception becomes a common strategy.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"><i data-lucide="bomb" class="w-5 h-5 text-red-500"></i></div>
+                            <div class="timeline-content">
+                                <div class="glass-card p-4 rounded-xl">
+                                    <h4 class="font-bold">Months 19-24: Crisis Point</h4>
+                                    <p class="text-sm text-gray-600">Spending is uncontrollable, savings are depleted, and the full extent of the financial damage is often discovered.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="toolkit" class="mb-20 md:mb-32">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold">The Recovery Toolkit</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-lg text-gray-600">A multi-faceted approach combining cognitive, behavioral, and emotional strategies is key to lasting change.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card rounded-2xl p-6 reveal">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center"><i data-lucide="brain" class="w-6 h-6 mr-3 text-[var(--accent-primary)]"></i>Cognitive Restructuring</h3>
+                    <p class="text-gray-600 mb-4">Challenge and reframe the thoughts that drive compulsion.</p>
+                    <ul class="space-y-2 text-sm">
+                        <li><strong>Identify:</strong> "I deserve this."</li>
+                        <li><strong>Challenge:</strong> "Do I deserve debt? What do I truly need?"</li>
+                        <li><strong>Replace:</strong> "I deserve peace of mind."</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-6 reveal">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center"><i data-lucide="hand" class="w-6 h-6 mr-3 text-[var(--accent-primary)]"></i>Behavioral Strategies</h3>
+                    <p class="text-gray-600 mb-4">Create friction and barriers to impulsive buying.</p>
+                     <ul class="space-y-2 text-sm">
+                        <li>Mandate a 24-hour "cooling-off" period.</li>
+                        <li>Delete shopping apps and unsubscribe from emails.</li>
+                        <li>Remove all saved payment information.</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-2xl p-6 reveal">
+                     <h3 class="text-2xl font-bold mb-4 flex items-center"><i data-lucide="dollar-sign" class="w-6 h-6 mr-3 text-[var(--accent-primary)]"></i>Financial Controls</h3>
+                    <p class="text-gray-600 mb-4">Establish strict financial guardrails and transparency.</p>
+                    <ul class="space-y-2 text-sm">
+                        <li>Create a strict, detailed budget.</li>
+                        <li>Consider a debit-only or cash system.</li>
+                        <li>Schedule weekly, non-judgmental financial check-ins.</li>
+                    </ul>
+                </div>
+                 <div class="glass-card rounded-2xl p-6 reveal md:col-span-2 lg:col-span-3">
+                    <h3 class="text-2xl font-bold mb-4 text-center"><i data-lucide="bar-chart-horizontal" class="inline w-6 h-6 mr-2 text-[var(--accent-primary)]"></i>Developing Healthy Coping Mechanisms</h3>
+                    <p class="text-center text-gray-600 mb-6">Recovery requires replacing the void left by shopping with fulfilling, healthy alternatives.</p>
+                    <div class="chart-container h-80">
+                        <canvas id="copingStrategiesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="support" class="mb-20 md:mb-32">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold">The Spouse's Role: A Partnership</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-lg text-gray-600">Your role is to be a supportive partner, not an enabler. This requires empathy, firm boundaries, and self-care.</p>
+            </div>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-2xl p-6 reveal">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-green-700">DO ✅</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start"><i data-lucide="message-square" class="w-5 h-5 mr-3 mt-1 text-green-600 flex-shrink-0"></i>Use "I-Statements" to express feelings without blame.</li>
+                        <li class="flex items-start"><i data-lucide="heart-handshake" class="w-5 h-5 mr-3 mt-1 text-green-600 flex-shrink-0"></i>Express empathy and a desire to work together as a team.</li>
+                        <li class="flex items-start"><i data-lucide="shield" class="w-5 h-5 mr-3 mt-1 text-green-600 flex-shrink-0"></i>Set clear, firm boundaries to protect shared finances.</li>
+                        <li class="flex items-start"><i data-lucide="life-buoy" class="w-5 h-5 mr-3 mt-1 text-green-600 flex-shrink-0"></i>Encourage and offer support for seeking professional help.</li>
+                    </ul>
+                </div>
+                 <div class="glass-card rounded-2xl p-6 reveal">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-red-700">DON'T ❌</h3>
+                     <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start"><i data-lucide="fingerprint" class="w-5 h-5 mr-3 mt-1 text-red-600 flex-shrink-0"></i>Blame, shame, or lecture. This fuels the cycle.</li>
+                        <li class="flex items-start"><i data-lucide="shovel" class="w-5 h-5 mr-3 mt-1 text-red-600 flex-shrink-0"></i>Enable the behavior by bailing them out of debt without a recovery plan.</li>
+                        <li class="flex items-start"><i data-lucide="spy" class="w-5 h-5 mr-3 mt-1 text-red-600 flex-shrink-0"></i>Engage in snooping or secret control, which erodes trust.</li>
+                        <li class="flex items-start"><i data-lucide="user-x" class="w-5 h-5 mr-3 mt-1 text-red-600 flex-shrink-0"></i>Neglect your own mental health and well-being.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-16 px-4 bg-gray-800 text-white mt-20">
+        <div class="reveal">
+            <i data-lucide="anchor" class="w-12 h-12 mx-auto text-[var(--accent-gold)] mb-4"></i>
+            <h3 class="text-2xl font-bold mb-4">When to Seek Professional Help</h3>
+            <p class="max-w-3xl mx-auto mb-4 text-gray-300">Self-help is a powerful start, but professional intervention is critical if debt is unmanageable, co-occurring conditions are severe, or there's no progress. Therapists, financial counselors, and support groups like Debtors Anonymous are vital resources.</p>
+            <p class="text-xs text-gray-400">This guide is for informational purposes and is not a substitute for professional medical or financial advice.</p>
+        </div>
+    </footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        lucide.createIcons();
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Optional: unobserve after revealing to save resources
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => {
+            observer.observe(el);
+        });
+    });
+
+    const chartTooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        if (!item || !item.chart.data.labels) return '';
+        let label = item.chart.data.labels[item.dataIndex];
+        return Array.isArray(label) ? label.join(' ') : label;
+    };
+    
+    const chartFont = { family: 'Lato', size: 12, weight: 'normal' };
+
+    // Chart.js Default Styling
+    Chart.defaults.font.family = 'Lato';
+    Chart.defaults.color = '#4a6a6a';
+
+    const coOccurringColors = {
+        primary: 'rgba(0, 128, 128, 0.8)',
+        secondary: 'rgba(0, 77, 77, 0.8)',
+        accent: 'rgba(184, 134, 11, 0.8)',
+        light: 'rgba(0, 128, 128, 0.5)',
+        dark: 'rgba(0, 77, 77, 0.6)'
+    };
+
+    const coOccurringCtx = document.getElementById('coOccurringChart');
+    if (coOccurringCtx) {
+        new Chart(coOccurringCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Mood Disorders', 'Anxiety Disorders', 'Impulse-Control', 'Substance Use', 'ADHD'],
+                datasets: [{
+                    label: 'Prevalence',
+                    data: [60, 45, 30, 20, 25],
+                    backgroundColor: [coOccurringColors.primary, coOccurringColors.secondary, coOccurringColors.accent, coOccurringColors.light, coOccurringColors.dark],
+                    borderColor: 'rgba(244, 247, 247, 0.8)',
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 20, font: chartFont }
+                    },
+                    tooltip: {
+                        callbacks: { title: chartTooltipTitleCallback, label: (c) => `${c.label}: ${c.raw}%` },
+                        backgroundColor: 'rgba(26, 58, 58, 0.9)',
+                        titleFont: { weight: 'bold' },
+                        bodyFont: chartFont,
+                        padding: 10,
+                        cornerRadius: 4
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+    }
+
+    const copingStrategiesCtx = document.getElementById('copingStrategiesChart');
+    if (copingStrategiesCtx) {
+        new Chart(copingStrategiesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Physical Activity', 'Creative Outlets', 'Mindfulness', 'Social Connection', 'New Skills'],
+                datasets: [{
+                    label: 'Impact Score',
+                    data: [9, 8.5, 8.8, 8.2, 7.5],
+                    backgroundColor: 'rgba(0, 128, 128, 0.7)',
+                    borderColor: 'rgba(0, 128, 128, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                         callbacks: { label: (c) => `${c.label}: ${c.raw}/10 Impact` },
+                         backgroundColor: 'rgba(26, 58, 58, 0.9)',
+                         titleFont: { weight: 'bold' },
+                         bodyFont: chartFont,
+                         padding: 10,
+                         cornerRadius: 4
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true, max: 10,
+                        grid: { display: false },
+                        ticks: { font: chartFont }
+                    },
+                    y: {
+                        grid: { color: '#e2e8f0' },
+                        ticks: { font: chartFont }
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

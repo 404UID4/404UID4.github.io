@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Unseen Side of Relationships: A Comprehensive Visual Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        .card {
+            background-color: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.15);
+        }
+        .counter {
+            font-weight: 900;
+            line-height: 1;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+        .animated-element {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .radial-progress-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+        }
+        .radial-progress-svg {
+            transform: rotate(-90deg);
+        }
+        .radial-progress-bar {
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 2s ease-out;
+        }
+        .list-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+        <div class="absolute top-[-20rem] left-[-20rem] w-[50rem] h-[50rem] bg-purple-900/20 rounded-full filter blur-3xl opacity-40"></div>
+        <div class="absolute bottom-[-15rem] right-[-15rem] w-[40rem] h-[40rem] bg-pink-900/20 rounded-full filter blur-3xl opacity-30"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-16 sm:py-24">
+
+        <header class="text-center mb-24 animated-element">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tighter">The <span class="gradient-text">Unseen Side</span> of Relationships</h1>
+            <p class="max-w-3xl mx-auto text-lg text-gray-400">A comprehensive visual analysis of unethical, immoral, and wrongful behaviors by women in intimate partnerships, synthesized from extensive research for enhanced interpretation.</p>
+        </header>
+
+        <!-- Section: Pre-Relationship Indicators -->
+        <section class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-12 animated-element tracking-tight">Pre-Relationship Correlates & Predictors</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Sexual History & Marital Stability</h3>
+                    <p class="text-gray-400 mb-6">Research indicates a correlation between the number of premarital sexual partners and subsequent marital outcomes for women.</p>
+                    <div class="chart-container h-[320px]">
+                        <canvas id="maritalStabilityChart"></canvas>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4 text-center">Data from the National Survey of Family Growth, analyzed by the Institute for Family Studies.</p>
+                </div>
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">History of Infidelity as a Predictor</h3>
+                    <p class="text-gray-400 mb-6">Individuals who have been unfaithful in one relationship are significantly more likely to do so in the next.</p>
+                    <div class="flex flex-col items-center justify-center h-full text-center">
+                         <div class="flex items-baseline">
+                            <span id="infidelity-predictor-counter" class="text-8xl font-black counter text-purple-400">0x</span>
+                         </div>
+                         <p class="mt-2 text-xl text-gray-300 max-w-sm">More likely to cheat in a subsequent relationship if they have cheated before.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Deceptive Conduct -->
+        <section class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-12 animated-element tracking-tight">Deceptive Conduct in Relationships</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element lg:col-span-3">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Infidelity: Prevalence & Motivation</h3>
+                    <div class="flex items-baseline mb-6">
+                        <span id="infidelity-counter" class="text-7xl font-black counter text-pink-400">0</span>
+                        <span class="text-5xl font-bold text-pink-400">%</span>
+                        <p class="ml-4 text-gray-300">of married women report sexual infidelity.</p>
+                    </div>
+                    <div class="chart-container h-[350px]">
+                        <h4 class="text-lg font-semibold text-center mb-2">Top Motivations for Affairs</h4>
+                        <canvas id="infidelityMotivationsChart"></canvas>
+                    </div>
+                </div>
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element lg:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Demographics</h3>
+                    <div class="chart-container h-[200px] mb-6">
+                        <h4 class="text-lg font-semibold text-center mb-2">Infidelity by Race/Ethnicity</h4>
+                        <canvas id="infidelityRaceChart"></canvas>
+                    </div>
+                    <div class="chart-container h-[200px]">
+                        <h4 class="text-lg font-semibold text-center mb-2">Infidelity by Age Group</h4>
+                        <canvas id="infidelityAgeChart"></canvas>
+                    </div>
+                </div>
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element lg:col-span-5">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Financial & Historical Deception</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                             <h4 class="text-xl font-semibold mb-3 text-purple-300">Financial Infidelity</h4>
+                             <p class="text-gray-400 mb-4">A 2021 NEFE survey found that among adults who combine finances:</p>
+                             <div class="flex items-center p-3 bg-white/5 rounded-lg mb-2">
+                                <span class="text-4xl font-bold text-pink-400 mr-4">39%</span>
+                                <p class="text-gray-300">of women admit to committing financial deception against a partner.</p>
+                             </div>
+                             <p class="text-gray-400">Motivations include desire for privacy (38%), fear of disapproval (34%), and embarrassment (33%).</p>
+                        </div>
+                        <div>
+                             <h4 class="text-xl font-semibold mb-3 text-purple-300">Concealment of Major Life History</h4>
+                             <p class="text-gray-400">While specific statistics are scarce, non-disclosure of critical facts (prior children, criminal records, major debt) is grounds for annulment, indicating its legal severity. Forgery or document falsification related to marriage often surfaces in immigration fraud cases, which constitute 41-49% of all immigration benefit fraud investigations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Abuse & Neglect -->
+        <section class="mb-24">
+             <h2 class="text-3xl font-bold text-center mb-12 animated-element tracking-tight">Abuse, Coercion & Neglect</h2>
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element text-center">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Physical Violence</h3>
+                     <p class="text-gray-400 mb-6">1 in 7 adult men in the U.S. have been victims of severe physical violence by an intimate partner.</p>
+                    <div class="flex items-baseline justify-center">
+                        <span id="ipv-counter" class="text-8xl font-black counter text-pink-400">1</span>
+                        <span class="text-6xl font-bold text-pink-400 ml-2">in 7</span>
+                     </div>
+                </div>
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element text-center">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Psychological Aggression</h3>
+                     <p class="text-gray-400 mb-6">Nearly half of all men in the U.S. have experienced psychological aggression by a partner.</p>
+                    <div class="flex items-baseline justify-center">
+                        <span id="psych-aggression-counter" class="text-8xl font-black counter text-purple-400">48.8</span>
+                        <span class="text-6xl font-bold text-purple-400">%</span>
+                     </div>
+                </div>
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element text-center">
+                     <h3 class="text-2xl font-bold mb-4 gradient-text">Sexual Coercion</h3>
+                     <p class="text-gray-400 mb-6">Includes pressure, threats, or manipulation to engage in unwanted sexual acts.</p>
+                     <div class="flex items-baseline justify-center">
+                        <span id="sexual-coercion-counter" class="text-8xl font-black counter text-pink-400">0</span>
+                        <span class="text-6xl font-bold text-pink-400">%</span>
+                     </div>
+                     <p class="mt-2 text-gray-300">of men report this form of coercion by an IP.</p>
+                </div>
+             </div>
+        </section>
+
+        <!-- Section: Personality & Behavior -->
+        <section class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-12 animated-element tracking-tight">Correlates of Personality & Behavior</h2>
+            <div class="card rounded-2xl p-6 lg:p-8 animated-element">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 gradient-text">The Dark Triad & Cluster B Traits</h3>
+                        <p class="text-gray-400 mb-6">Research consistently links certain personality structures with higher rates of unethical and harmful relational behaviors. The "Dark Triad" (Narcissism, Machiavellianism, Psychopathy) and Cluster B Personality Disorders (BPD, NPD) are significant predictors.</p>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start"><svg class="list-icon text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><div><strong>Higher Infidelity:</strong> Traits are strongly correlated with a greater likelihood of cheating.</div></li>
+                            <li class="flex items-start"><svg class="list-icon text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><div><strong>Manipulation & Control:</strong> Machiavellianism, in particular, predicts strategic manipulation.</div></li>
+                            <li class="flex items-start"><svg class="list-icon text-pink-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><div><strong>Emotional Instability:</strong> BPD is associated with intense, unstable relationships and frantic efforts to avoid abandonment.</div></li>
+                        </ul>
+                    </div>
+                     <div class="chart-container h-[350px]">
+                        <canvas id="darkTriadChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Impact on Male Partners -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12 animated-element tracking-tight">Impact & Aftermath for Male Partners</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                 <div class="card rounded-2xl p-6 lg:p-8 animated-element text-center flex flex-col items-center justify-center">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Dismissed by Systems</h3>
+                    <p class="text-gray-400 mb-6">Male survivors reporting abuse often face disbelief and are sometimes misidentified as the perpetrator.</p>
+                     <div class="radial-progress-container">
+                        <svg class="radial-progress-svg w-full h-full" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"></circle>
+                            <circle id="barrier-progress" class="radial-progress-bar" cx="50" cy="50" r="45" fill="none" stroke="#f472b6" stroke-width="8" stroke-linecap="round"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center text-4xl font-black text-pink-400 z-10"><span id="barrier-counter">0</span>%</div>
+                    </div>
+                     <p class="mt-4 text-gray-300">Of male victims who called police for help were arrested themselves.</p>
+                </div>
+                <div class="card rounded-2xl p-6 lg:p-8 animated-element md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Severe Health Consequences</h3>
+                    <p class="text-gray-400 mb-6">The mental and physical toll of psychological abuse and control on male victims is significant and well-documented.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="p-4 bg-white/5 rounded-lg text-center">
+                            <p class="text-sm text-purple-300">Symptoms of</p>
+                            <p class="text-4xl font-bold text-white">PTSD</p>
+                            <p class="text-sm text-gray-400">are reported by nearly 4 in 10 male victims.</p>
+                        </div>
+                         <div class="p-4 bg-white/5 rounded-lg text-center">
+                            <p class="text-sm text-purple-300">Increased risk of</p>
+                            <p class="text-4xl font-bold text-white">Depression</p>
+                            <p class="text-sm text-gray-400">and other mood disorders.</p>
+                        </div>
+                         <div class="p-4 bg-white/5 rounded-lg text-center">
+                            <p class="text-sm text-purple-300">Higher rates of</p>
+                            <p class="text-4xl font-bold text-white">Anxiety</p>
+                             <p class="text-sm text-gray-400">and chronic stress.</p>
+                        </div>
+                         <div class="p-4 bg-white/5 rounded-lg text-center">
+                            <p class="text-sm text-purple-300">Elevated</p>
+                            <p class="text-4xl font-bold text-white">Suicidal Ideation</p>
+                            <p class="text-sm text-gray-400">compared to non-abused peers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-gray-500 mt-24 animated-element">
+            <p class="max-w-3xl mx-auto">This infographic is a visualization of data synthesized from a comprehensive research report. The topic of intimate partner harm is complex and sensitive. This visualization aims to present data neutrally and does not diminish the severity of harm regardless of gender. The data presented is based on available research as of mid-2025 and is subject to the limitations of self-reporting and varying study methodologies.</p>
+        </footer>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- GSAP Animations ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.animated-element').forEach(el => {
+            gsap.fromTo(el, { opacity: 0, y: 50 }, {
+                opacity: 1, y: 0, duration: 1,
+                scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+            });
+        });
+
+        function animateCounter(el, target, suffix = '') {
+            if (!el) return; // Guard against null elements
+            const obj = { val: 0 };
+            gsap.to(obj, {
+                val: target,
+                duration: 2,
+                ease: 'power1.inOut',
+                scrollTrigger: { trigger: el, start: 'top 90%' },
+                onUpdate: () => {
+                    // For decimal values, use toFixed, otherwise round.
+                    const displayVal = target % 1 !== 0 ? obj.val.toFixed(1) : Math.round(obj.val);
+                    el.innerHTML = displayVal + suffix;
+                }
+            });
+        }
+        
+        // --- Specific Counter Animations ---
+        animateCounter(document.getElementById('infidelity-predictor-counter'), 3, 'x');
+        animateCounter(document.getElementById('infidelity-counter'), 13, '%');
+        animateCounter(document.getElementById('psych-aggression-counter'), 48.8, '%');
+        // The '1 in 7' is handled slightly differently as it's not a simple number animation
+        const ipvCounter = document.getElementById('ipv-counter');
+        if(ipvCounter) {
+            gsap.from(ipvCounter, { textContent: 0, duration: 1.5, ease: 'power1.inOut', snap: { textContent: 1}, scrollTrigger: { trigger: ipvCounter, start: 'top 90%'}});
+        }
+        animateCounter(document.getElementById('sexual-coercion-counter'), 5, '%');
+        animateCounter(document.getElementById('barrier-counter'), 64, '%');
+
+
+        const barrierProgress = document.getElementById('barrier-progress');
+        gsap.to(barrierProgress, {
+            strokeDashoffset: 440 * (1 - 0.64),
+            duration: 2,
+            ease: 'power1.inOut',
+            scrollTrigger: {
+                trigger: barrierProgress,
+                start: 'top 90%'
+            }
+        });
+
+        const chartTextColor = '#e5e7eb';
+        const chartGridColor = 'rgba(255, 255, 255, 0.1)';
+
+        // --- CHART CONFIGS ---
+
+        // Marital Stability Chart
+        new Chart(document.getElementById('maritalStabilityChart'), {
+            type: 'bar',
+            data: {
+                labels: ['0', '1', '2-4', '5-9', '10+'],
+                datasets: [{
+                    label: '5-Year Divorce Rate (%)',
+                    data: [5, 13, 17, 24, 33],
+                    backgroundColor: 'rgba(244, 114, 182, 0.6)',
+                    borderColor: 'rgba(244, 114, 182, 1)',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, title: { display: true, text: '5-Year Divorce Rate by Woman\'s # of Premarital Partners', color: chartTextColor }},
+                scales: {
+                    x: { title: { display: true, text: '# of Partners', color: chartTextColor }, grid: { display: false }, ticks: { color: chartTextColor }},
+                    y: { grid: { color: chartGridColor }, ticks: { color: chartTextColor, callback: v => v + '%' }}
+                }
+            }
+        });
+        
+        // Infidelity Motivations Chart
+        new Chart(document.getElementById('infidelityMotivationsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Rel. Dissatisfaction', 'Unmet Emotional Needs', 'Neglect', 'Need for Autonomy', 'Sex. Dissatisfaction'],
+                datasets: [{ data: [70, 60, 50, 30, 22], backgroundColor: ['#a78bfa', '#c084fc', '#d8b4fe', '#e9d5ff', '#f3e8ff'], borderRadius: 5 }]
+            },
+            options: {
+                indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: chartGridColor }, ticks: { color: chartTextColor, callback: v => v + '%' }},
+                    y: { grid: { display: false }, ticks: { color: chartTextColor }}
+                }
+            }
+        });
+
+        // Infidelity Race Chart
+        new Chart(document.getElementById('infidelityRaceChart'), {
+            type: 'bar',
+            data: { labels: ['Black', 'White', 'Hispanic'], datasets: [{ data: [22, 16, 13], backgroundColor: ['#a78bfa', '#c084fc', '#e9d5ff'], borderRadius: 5 }] },
+            options: {
+                indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }},
+                scales: { x: { grid: { color: chartGridColor }, ticks: { color: chartTextColor }}, y: { grid: { display: false }, ticks: { color: chartTextColor }}}
+            }
+        });
+
+        // Infidelity Age Chart
+        new Chart(document.getElementById('infidelityAgeChart'), {
+            type: 'line',
+            data: {
+                labels: ['18-29', '30-39', '40-49', '50-59', '60+'],
+                datasets: [{
+                    label: 'Infidelity Rate',
+                    data: [11, 14, 18, 18, 13],
+                    fill: false, borderColor: '#f472b6', tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }},
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: chartTextColor }},
+                    y: { grid: { color: chartGridColor }, ticks: { color: chartTextColor, callback: v => v + '%' }}
+                }
+            }
+        });
+        
+        // Dark Triad Chart
+        new Chart(document.getElementById('darkTriadChart'), {
+            type: 'radar',
+            data: {
+                labels: ['Infidelity', 'Manipulation', 'Lack of Empathy', 'Impulsivity', 'Conflict'],
+                datasets: [
+                    { label: 'Narcissism', data: [8, 9, 8, 6, 7], borderColor: '#f472b6', backgroundColor: 'rgba(244, 114, 182, 0.2)' },
+                    { label: 'Machiavellianism', data: [7, 10, 7, 5, 8], borderColor: '#a78bfa', backgroundColor: 'rgba(167, 139, 250, 0.2)' },
+                    { label: 'Psychopathy', data: [9, 7, 9, 9, 6], borderColor: '#facc15', backgroundColor: 'rgba(250, 204, 21, 0.2)' }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: chartTextColor } } },
+                scales: {
+                    r: {
+                        angleLines: { color: chartGridColor },
+                        grid: { color: chartGridColor },
+                        pointLabels: { font: { size: 12 }, color: chartTextColor },
+                        ticks: { display: false, backdropColor: 'transparent' }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>

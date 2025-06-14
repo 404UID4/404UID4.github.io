@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal: Premium White-Labeled AI Service Deployment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%); /* sky-600 to sky-500 */
+        }
+        .section-title {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            color: #0f172a; /* slate-900 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            text-align: center;
+        }
+        .benefit-card, .deliverable-card, .cost-benefit-card, .advantage-card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%; 
+        }
+        .benefit-card-content, .advantage-card-content {
+            flex-grow: 1;
+        }
+        .benefit-card:hover, .cost-benefit-card:hover, .advantage-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .phase-card { 
+             background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .icon-placeholder {
+            font-size: 2.5rem; 
+            margin-bottom: 1rem; 
+            color: #0ea5e9; 
+        }
+        .advantage-icon {
+            font-size: 2rem;
+            color: #0ea5e9;
+            margin-right: 0.75rem;
+        }
+        .cost-benefit-value {
+            font-size: 2.25rem; 
+            font-weight: 800; 
+            color: #059669; 
+            line-height: 1.2;
+        }
+        .cost-value {
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: #059669; 
+        }
+        .typical-cost-value {
+            font-size: 1rem; 
+            font-weight: 500; 
+            color: #ef4444; 
+        }
+        .cta-button { /* Kept for potential future use, but not used in the main CTA now */
+            background-color: #0ea5e9; 
+            color: white;
+            padding: 0.75rem 2rem; 
+            border-radius: 0.5rem; 
+            font-weight: 600; 
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+        .cta-button:hover {
+            background-color: #0284c7; 
+        }
+        .chart-container { /* For Gantt */
+            position: relative;
+            width: 100%;
+            height: 750px; 
+            max-height: 90vh; 
+        }
+        .financial-chart-container { /* For Financial Projection */
+            position: relative;
+            width: 100%;
+            height: 500px; 
+            max-height: 70vh;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 850px; 
+            }
+            .financial-chart-container {
+                height: 450px;
+            }
+        }
+        .benefit-sub-value {
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: #059669; 
+        }
+        .attention-grabber-section {
+            background-color: #e0f2fe; 
+            padding-top: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-radius: 0.75rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="hero-gradient text-white py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-6">Proposal: Deploy My Premium White-Labeled AI Service</h1>
+            <p class="text-lg md:text-xl mb-8 opacity-90">A strategic initiative to build a secure, powerful, and fully customized AI platform, enhancing control, brand consistency, and access to cutting-edge AI capabilities for your organization, delivered by me in approximately 75 working days.</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <section class="mb-20 text-center">
+            <h2 class="section-title">The Opportunity: Leading with AI</h2>
+            <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                In today's rapidly evolving digital landscape, leveraging Artificial Intelligence is no longer a luxury but a strategic imperative. This proposal outlines the deployment of a bespoke AI service, designed by me to provide your organization with a distinct competitive advantage. By hosting a self-managed, white-labeled AI platform, you gain unparalleled control over data, ensure brand consistency, and unlock tailored AI functionalities—including advanced customer support, internal knowledge management, and operational automation—to drive innovation, efficiency, and growth.
+            </p>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="section-title">My Proposed Solution: A Unified AI Platform</h2>
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                    I will deploy a comprehensive, self-hosted AI application on your dedicated server. This platform will be tailored to your business, providing a powerful and flexible AI toolkit. Key features include:
+                </p>
+                <ul class="list-disc list-inside space-y-3 text-slate-600 text-lg">
+                    <li><strong class="text-sky-600">Full Data Control:</strong> Securely hosted on your private server.</li>
+                    <li><strong class="text-sky-600">Customizable Interface (Open WebUI):</strong> Featuring separated workspaces for different teams (Owner, Service, Sales, Operations, etc.) ensuring organized and permissioned access.</li>
+                    <li><strong class="text-sky-600">Versatile AI Model Access (OpenRouter.ai):</strong> Enabling advanced AI tools that can process text, images, and voice.</li>
+                    <li><strong class="text-sky-600">Intelligent Information Retrieval (RAG):</strong> Access and query up to 10,000 pages of your business documents (including scanned files) and real-time web information.</li>
+                    <li><strong class="text-sky-600">24/7 AI Customer Support:</strong> An automated voice agent to handle customer inquiries in real-time.</li>
+                    <li><strong class="text-sky-600">Multimodal AI:</strong> Capabilities for image generation, image analysis, and voice-to-text/text-to-voice.</li>
+                    <li><strong class="text-sky-600">Automation Tools:</strong> Including daily summarized email reports and AI-assisted drafting for Outlook emails.</li>
+                    <li><strong class="text-sky-600">Centralized Document Hub:</strong> A personal workspace for all business documents, searchable by AI and accessible via API.</li>
+                    <li><strong class="text-sky-600">Modular & Scalable:</strong> Built with Docker for reliability and easy future integrations.</li>
+                    <li><strong class="text-sky-600">Secure Custom Domain Access:</strong> HTTPS encryption for all user interactions.</li>
+                    <li><strong class="text-sky-600">Licensing Potential:</strong> The system can be structured for potential third-party licensing, creating new revenue opportunities.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-20 attention-grabber-section">
+            <h2 class="section-title">Compelling Advantages of My Solution</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+                <div class="advantage-card">
+                    <div class="flex items-center mb-3">
+                        <span class="advantage-icon">💰</span>
+                        <h3 class="text-lg font-semibold text-slate-800">Exceptional Value: ~5% Typical Cost</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">Achieve a comprehensive AI solution at a fraction of the typical enterprise development costs.</p>
+                </div>
+                <div class="advantage-card">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">⚡</span>
+                        <h3 class="text-lg font-semibold text-slate-800">Rapid Deployment: ~80% Faster</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">Go from concept to fully operational AI service in approximately 75 working days, significantly faster than typical custom builds.</p>
+                </div>
+                <div class="advantage-card">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">📈</span>
+                        <h3 class="text-lg font-semibold text-slate-800">Target: Profitability by Early 2026</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">With low operational costs and potential for new revenue streams (e.g., licensing), a strong profit potential is projected.</p>
+                </div>
+                <div class="advantage-card">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">📞</span>
+                        <h3 class="text-lg font-semibold text-slate-800">24/7 AI Customer Support Agent</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">Provide round-the-clock customer service without significantly increasing staffing costs, handling inquiries efficiently.</p>
+                </div>
+                 <div class="advantage-card">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">🧩</span>
+                        <h3 class="text-lg font-semibold text-slate-800">Modular & Extensible Design</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">Built for easy integration with other business automation tools and future AI advancements.</p>
+                </div>
+                <div class="advantage-card">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">📚</span>
+                        <h3 class="text-lg font-semibold text-slate-800">Rich Knowledge Base (RAG)</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">Process and make searchable up to 10,000 pages of your business documents, including scanned files.</p>
+                </div>
+                <div class="advantage-card">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">🛠️</span>
+                        <h3 class="text-lg font-semibold text-slate-800">Agentic Multimodal Tools</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">Access advanced AI agents capable of understanding and generating text, images, and voice for complex tasks.</p>
+                </div>
+                 <div class="advantage-card">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">💡</span>
+                        <h3 class="text-lg font-semibold text-slate-800">Expert Advisor for All Employees</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">Empower your team with instant access to an AI expert, trained on your business data, for guidance and support.</p>
+                </div>
+                 <div class="advantage-card">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">🌱</span>
+                        <h3 class="text-lg font-semibold text-slate-800">Future-Ready & Continuously Improving</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">Designed for manageable upkeep and to improve over time with new data and evolving AI models.</p>
+                </div>
+                <div class="advantage-card md:col-span-2 lg:col-span-3">
+                     <div class="flex items-center mb-3">
+                        <span class="advantage-icon">💵</span>
+                        <h3 class="text-lg font-semibold text-slate-800">New Revenue Stream: Licensing Potential</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm">The developed system is licensable to third-parties. Example: $25/user/month x 10 users/business = $250/month. Licensing to just 20 businesses could yield $5,000/month, with a vast global market potential.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="section-title">Key Benefits & Value Proposition</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="benefit-card text-center">
+                    <div class="icon-placeholder">🛡️</div>
+                    <div class="benefit-card-content">
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Full Control & Data Sovereignty</h3>
+                        <p class="text-slate-600 text-sm">My self-managed VPS ensures complete control over your data and AI environment, meeting stringent privacy and security requirements.</p>
+                    </div>
+                </div>
+                <div class="benefit-card text-center">
+                    <div class="icon-placeholder">🏷️</div>
+                    <div class="benefit-card-content">
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Premium White-Labeled Experience</h3>
+                        <p class="text-slate-600 text-sm">Fully branded to your organization, reinforcing your identity and providing a seamless, professional AI interface for staff and customers.</p>
+                    </div>
+                </div>
+                 <div class="benefit-card text-center">
+                    <div class="icon-placeholder">🚀</div>
+                    <div class="benefit-card-content">
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Unprecedented Value & Speed</h3>
+                        <p class="text-slate-600 text-sm">Delivered at ~5% of typical costs and ~80% faster than traditional custom AI development cycles.</p>
+                    </div>
+                </div>
+                <div class="benefit-card text-center">
+                    <div class="icon-placeholder">🔍</div>
+                    <div class="benefit-card-content">
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Enhanced Information Access</h3>
+                        <p class="text-slate-600 text-sm">AI-powered RAG across up to 10,000 pages of internal documents (including scanned) and real-time web data.</p>
+                    </div>
+                </div>
+                <div class="benefit-card text-center">
+                    <div class="icon-placeholder">🖼️🗣️</div>
+                    <div class="benefit-card-content">
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Advanced Multimodal Interactions</h3>
+                        <p class="text-slate-600 text-sm">Engage with agentic AI tools using text, image, and voice for a comprehensive and intuitive user experience.</p>
+                    </div>
+                </div>
+                <div class="benefit-card text-center">
+                    <div class="icon-placeholder">🌍</div>
+                    <div class="benefit-card-content">
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">New Revenue Stream Potential</h3>
+                        <p class="text-slate-600 text-sm">My core system architecture allows for potential licensing to third parties, creating direct profit opportunities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="section-title">Deployment Roadmap (~75 Working Days)</h2>
+             <p class="text-center text-slate-600 mb-8 max-w-2xl mx-auto">
+                The following Gantt chart visualizes my detailed project timeline. Hover over each task bar to see specific objectives and understand the progression through each phase of the deployment.
+            </p>
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
+               <div class="chart-container">
+                   <canvas id="ganttChart"></canvas>
+               </div>
+            </div>
+        </section>
+        
+        <section class="mb-20">
+            <h2 class="section-title">Key Project Deliverables</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="deliverable-card">
+                    <ul class="space-y-3 text-slate-600">
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> Fully deployed AI application with multi-workspace user management.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> Secure HTTPS access via your custom domain.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> Configured Open WebUI with role-based admin/user access.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> Integrated OpenRouter.ai for agentic multimodal tool access.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> RAG system capable of processing up to 10,000 pages (incl. scanned docs).</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> Deployed 24/7 Humanless RAG-powered Voice Call AI Customer Support Agent.</li>
+                    </ul>
+                </div>
+                <div class="deliverable-card">
+                     <ul class="space-y-3 text-slate-600">
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> System for automated daily email summary reports.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> AI-assisted email drafting content generation for Outlook.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> Personal/Business document workspace with API access.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> (Optional) Secure custom RAG API for external system integration.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> Implementation of security best practices and basic backup strategy.</li>
+                        <li class="flex items-start"><span class="text-sky-500 mr-2 text-xl">✓</span> Training materials generated by AI for new hires using internal docs.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="section-title">Technology Highlights</h2>
+            <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-slate-600">
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">Ubuntu LTS</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">Docker & Compose</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">Open WebUI</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">OpenRouter.ai</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">ChromaDB (Vector Store)</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">SearXNG (Web RAG)</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">Caddy/Nginx</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">FastAPI/Flask</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">Python (Backend & AI Scripting)</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">OCR Technology</span>
+                <span class="bg-slate-200 px-4 py-2 rounded-full text-sm font-medium">Advanced STT/TTS</span>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="section-title">Investment & Projected ROI</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="cost-benefit-card text-center">
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-3">Estimated Project Investment</h3>
+                    <p class="cost-value mb-2">$25,000 - $40,000</p>
+                    <p class="text-slate-600 text-sm mb-3">(A detailed breakdown will be provided. Cost includes my development, setup, and initial configuration for the ~75-day deployment, encompassing all specified features.)</p>
+                    <hr class="my-4 border-slate-200">
+                    <p class="text-slate-600 text-sm">Typical market cost for comparable custom enterprise AI solutions (often taking 6-12+ months to produce):</p>
+                    <p class="typical-cost-value mt-1">$250,000 - $1,000,000+</p>
+                    <p class="text-xs text-slate-500">(My efficient, open-source focused approach delivers exceptional value and speed.)</p>
+                    <p class="text-slate-600 text-sm mt-3">Projected Low Daily Operational Costs: <strong class="text-emerald-600">~$20-50</strong> (for typical AI model usage via OpenRouter & VPS essentials; usage dependent).</p>
+                </div>
+                <div class="cost-benefit-card text-center">
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-3">Key Projected Benefits</h3>
+                    <div class="space-y-4 mt-4">
+                        <div>
+                            <p class="cost-benefit-value">15-25%</p>
+                            <p class="text-slate-600 font-medium">Average Increase in Team Productivity</p>
+                            <p class="text-xs text-slate-500">(Across Service Techs, Retail Sales, Management, by streamlining tasks, providing quick answers from your knowledge base, and AI-assisted communication.)</p>
+                        </div>
+                        <div>
+                            <p class="cost-benefit-value">3-5 Hours/Week</p>
+                            <p class="text-slate-600 font-medium">Time Saved per Employee on Information Retrieval</p>
+                             <p class="text-xs text-slate-500">(Via centralized AI-searchable knowledge base including up to 10,000 pages of documents, including scanned files.)</p>
+                        </div>
+                         <div>
+                            <p class="text-emerald-600 font-bold text-xl">Exceptional Risk/Reward Profile</p>
+                            <p class="text-slate-600 font-medium">Rapid deployment at minimal typical cost, with substantial operational benefits and new revenue potential through licensing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <p class="text-center text-slate-600 mt-8 text-sm">
+                Further projected benefits include enhanced data security, improved decision-making through faster access to insights, greater operational flexibility with separated workspaces, and improved customer satisfaction with 24/7 AI-powered support.
+            </p>
+        </section>
+        
+        <section class="mb-20">
+            <h2 class="section-title">Financial Projections & Growth Potential</h2>
+            <p class="text-center text-slate-600 mb-8 max-w-3xl mx-auto">
+                This section outlines the projected financial trajectory of the AI service over a three-year period, demonstrating the path to profitability and the significant return on investment. The model considers the initial investment, ongoing operational costs, and a conservative subscriber acquisition rate.
+            </p>
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
+               <div class="financial-chart-container">
+                   <canvas id="financialProjectionChart"></canvas>
+               </div>
+               <div class="mt-6 text-sm text-slate-500">
+                   <p><strong>Assumptions:</strong></p>
+                   <ul class="list-disc list-inside ml-4">
+                       <li>Initial Investment: $15,000 (covering the first 45 days of deployment and setup).</li>
+                       <li>Daily Operational Cost: $25 (starting after 45-day deployment).</li>
+                       <li>Revenue per Subscriber (Business License): $350/month ($100 base + $25/user x 10 users).</li>
+                       <li>Subscriber Acquisition: 1 new business subscriber added every 10 days (post-deployment).</li>
+                   </ul>
+                   <p class="mt-2">The chart illustrates the cumulative net financial position. The break-even point and subsequent profit growth highlight the strong financial viability of this venture, especially when considering the potential for accelerated subscriber acquisition or direct licensing.</p>
+               </div>
+            </div>
+        </section>
+
+        </main>
+
+    <footer class="text-center py-8 border-t border-slate-200" id="contact">
+        <p class="text-sm text-slate-500">&copy; [Your Company Name] <span id="currentYear"></span>. All rights reserved.</p>
+         <p class="text-sm text-slate-500 mt-1">For inquiries, please contact me at [Your Contact Email/Phone].</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const roadmapData = {
+            tasks: [
+                // Phase 1: VPS & Infra (Total: 10 days)
+                { label: 'VPS Provision & OS Install', phase: 'P1: VPS & Infra', duration: 1, color: 'rgba(59, 130, 246, 0.7)', objective: 'Select provider, plan; provision instance; initial OS (Ubuntu 22.04 LTS) install.' },
+                { label: 'Initial OS Hardening', phase: 'P1: VPS & Infra', duration: 3, color: 'rgba(59, 130, 246, 0.7)', objective: 'Create non-root sudo user, setup SSH key auth (disable password/root), basic UFW firewall config, initial security audit.' },
+                { label: 'Advanced OS Hardening', phase: 'P1: VPS & Infra', duration: 2, color: 'rgba(59, 130, 246, 0.7)', objective: 'Install Fail2Ban, minimize attack surface (remove unused services), secure shared memory, review CIS benchmarks.' },
+                { label: 'Docker & Compose Install', phase: 'P1: VPS & Infra', duration: 1, color: 'rgba(59, 130, 246, 0.7)', objective: 'Install Docker Engine & Compose plugin from official repo, verify with hello-world.' },
+                { label: 'Reverse Proxy Install & Basic Config', phase: 'P1: VPS & Infra', duration: 3, color: 'rgba(59, 130, 246, 0.7)', objective: 'Install Caddy or Nginx (as Docker container or on host), placeholder configuration.' },
+                
+                // Phase 2: OWebUI & Domain (Total: 10 days)
+                { label: 'Create OWebUI docker-compose', phase: 'P2: OWebUI & Domain', duration: 1, color: 'rgba(16, 185, 129, 0.7)', objective: 'Define Open WebUI service, volumes, network, initial env vars in docker-compose.yml.' },
+                { label: 'Run OWebUI & Initial Log Check', phase: 'P2: OWebUI & Domain', duration: 1, color: 'rgba(16, 185, 129, 0.7)', objective: 'Start Open WebUI via `docker compose up -d`, check initial logs for errors.' },
+                { label: 'Configure Reverse Proxy for OWebUI', phase: 'P2: OWebUI & Domain', duration: 4, color: 'rgba(16, 185, 129, 0.7)', objective: 'Detailed Caddyfile/Nginx config to route custom domain to Open WebUI, ensure WebSocket support, basic security headers.' },
+                { label: 'Obtain & Configure SSL Certificate', phase: 'P2: OWebUI & Domain', duration: 1, color: 'rgba(16, 185, 129, 0.7)', objective: 'Use Caddy auto-HTTPS or Certbot for Nginx to get Let\'s Encrypt SSL cert, verify HTTPS.' },
+                { label: 'OWebUI Admin Setup & Workspace Config', phase: 'P2: OWebUI & Domain', duration: 3, color: 'rgba(16, 185, 129, 0.7)', objective: 'Create admin user, OpenRouter API Key, setup initial separated workspaces/groups as per requirements.' },
+
+                // Phase 3: Core RAG (Total: 15 days)
+                { label: 'Configure ChromaDB & OCR Ingestion Pipeline', phase: 'P3: Core RAG', duration: 2, color: 'rgba(217, 119, 6, 0.7)', objective: 'Set RAG env vars, configure OCR tools (e.g., Tesseract if local) for scanned docs ingestion.' },
+                { label: 'Test Doc Upload (incl. Scanned) & RAG - Iteration 1', phase: 'P3: Core RAG', duration: 5, color: 'rgba(217, 119, 6, 0.7)', objective: 'Upload diverse sample docs (text, PDF, scanned), test retrieval, initial tuning of chunking/embeddings.' },
+                { label: 'Deploy SearXNG (Docker) & Customize', phase: 'P3: Core RAG', duration: 4, color: 'rgba(217, 119, 6, 0.7)', objective: 'Add SearXNG to docker-compose, mount custom settings.yml (enable JSON, engines) & limiter.toml.' },
+                { label: 'Integrate SearXNG with OWebUI & Test', phase: 'P3: Core RAG', duration: 1, color: 'rgba(217, 119, 6, 0.7)', objective: 'Set ENABLE_RAG_WEB_SEARCH, SEARXNG_QUERY_URL env vars; configure in Admin Panel, initial tests.' },
+                { label: 'Comprehensive RAG Testing & Refinement', phase: 'P3: Core RAG', duration: 3, color: 'rgba(217, 119, 6, 0.7)', objective: 'Thorough testing of document RAG (up to 10k pages capacity) and web RAG, refine prompts, chunking, and embedding choices for relevance.' },
+                
+                // Phase 4: Ext. RAG API & Automation (Total: 12.5 days)
+                { label: 'Design RAG API & Automation Endpoints', phase: 'P4: Ext. RAG API & Automation', duration: 2, color: 'rgba(249, 115, 22, 0.7)', objective: 'Detailed API specs for personal doc workspace, daily reports, Outlook draft content generation.' },
+                { label: 'Implement RAG API & Automation Logic', phase: 'P4: Ext. RAG API & Automation', duration: 6, color: 'rgba(249, 115, 22, 0.7)', objective: 'Develop backend code (FastAPI/Flask) for RAG API, report generation, email draft content logic.' },
+                { label: 'Implement API Key Auth & Security for Custom API', phase: 'P4: Ext. RAG API & Automation', duration: 2, color: 'rgba(249, 115, 22, 0.7)', objective: 'Add robust API key validation and basic security measures to custom API.' },
+                { label: 'Containerize, Integrate & Test Custom API', phase: 'P4: Ext. RAG API & Automation', duration: 2.5, color: 'rgba(249, 115, 22, 0.7)', objective: 'Dockerfile for API, add to docker-compose, route via reverse proxy, initial integration testing.' },
+
+                // Phase 5: Multimodal & Voice Agent (Total: 12.5 days)
+                { label: 'Configure Image Generation/Understanding Models', phase: 'P5: Multimodal & Voice Agent', duration: 3, color: 'rgba(192, 38, 211, 0.7)', objective: 'Setup OpenRouter image/vision models in OWebUI, test various prompt styles and image inputs.' },
+                { label: 'Configure Advanced STT/TTS for Voice Agent', phase: 'P5: Multimodal & Voice Agent', duration: 3, color: 'rgba(192, 38, 211, 0.7)', objective: 'Setup high-quality STT/TTS engines (local or cloud via OpenRouter) for humanless voice support agent.' },
+                { label: 'Develop Voice Call Agent Logic & RAG Integration', phase: 'P5: Multimodal & Voice Agent', duration: 4, color: 'rgba(192, 38, 211, 0.7)', objective: 'Implement conversational flow, RAG integration, and error handling for the voice support agent.' },
+                { label: 'Apply Basic White-Labeling & UI Review', phase: 'P5: Multimodal & Voice Agent', duration: 2.5, color: 'rgba(192, 38, 211, 0.7)', objective: 'Customize logo/colors (per licensing); review UI for consistency; Test Mermaid.js diagrams.' },
+
+                // Phase 6: Launch (Total: 15 days)
+                { label: 'User Management & Workspace Policies Implementation', phase: 'P6: Launch', duration: 2.5, color: 'rgba(220, 38, 38, 0.7)', objective: 'Finalize OWebUI user roles, registration settings, and implement detailed workspace access policies.' },
+                { label: 'Comprehensive E2E Testing (All Features & Workspaces)', phase: 'P6: Launch', duration: 5, color: 'rgba(220, 38, 38, 0.7)', objective: 'Thoroughly test all user flows: auth, chat, RAG, voice agent, API, reports, email drafts, across different user roles/workspaces.' },
+                { label: 'Full Security Review, Hardening & Penetration Testing Prep', phase: 'P6: Launch', duration: 2.5, color: 'rgba(220, 38, 38, 0.7)', objective: 'Verify all security checklist items based on E2E findings, apply final hardening, prepare for potential external pen-testing.' },
+                { label: 'Implement & Test Backup/Restore Procedures', phase: 'P6: Launch', duration: 1.5, color: 'rgba(220, 38, 38, 0.7)', objective: 'Setup and test backup scripts for all critical data; verify restoration process.' },
+                { label: 'Final Deployment Prep, Documentation & Go/No-Go', phase: 'P6: Launch', duration: 1.5, color: 'rgba(220, 38, 38, 0.7)', objective: 'Run final pre-launch checklist, finalize user documentation & training materials, conduct go/no-go meeting.' },
+                { label: 'Official Launch & Extended Hypercare Monitoring', phase: 'P6: Launch', duration: 2, color: 'rgba(220, 38, 38, 0.7)', objective: 'Officially "launch" service, announce to users, perform intensive monitoring for immediate post-launch issues and gather initial user feedback.' },
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let ganttChart = null;
+            let financialChart = null;
+            
+            function renderGanttChart() {
+                if (ganttChart) { ganttChart.destroy(); }
+                const ctx = document.getElementById('ganttChart').getContext('2d');
+                
+                // Start date for the roadmap is June 20, 2025
+                let currentGlobalDateMarker = new Date('2025-06-20T00:00:00'); 
+                while (currentGlobalDateMarker.getDay() === 0 || currentGlobalDateMarker.getDay() === 6) {
+                    currentGlobalDateMarker.setDate(currentGlobalDateMarker.getDate() + 1);
+                }
+
+                const chartTasks = [];
+
+                for (const task of roadmapData.tasks) {
+                    let taskStartDate = new Date(currentGlobalDateMarker);
+
+                    // If currentGlobalDateMarker is at 12 PM and duration is a full day or more, advance to next day 00:00
+                    if (taskStartDate.getHours() === 12 && task.duration >= 1) { 
+                        taskStartDate.setDate(taskStartDate.getDate() + 1); 
+                        taskStartDate.setHours(0,0,0,0);
+                        // Skip weekends if advancing
+                        while (taskStartDate.getDay() === 0 || taskStartDate.getDay() === 6) { 
+                            taskStartDate.setDate(taskStartDate.getDate() + 1);
+                        }
+                    } else if (taskStartDate.getHours() !== 0 && taskStartDate.getHours() !== 12) { 
+                        // If not at 00:00 or 12:00, reset to 00:00 and skip weekends
+                         taskStartDate.setHours(0,0,0,0);
+                         while (taskStartDate.getDay() === 0 || taskStartDate.getDay() === 6) { 
+                            taskStartDate.setDate(taskStartDate.getDate() + 1);
+                        }
+                    }
+                    
+                    let taskEndDateForBar;
+                    let workDaysToConsume = task.duration;
+                    let tempCurrentDay = new Date(taskStartDate);
+
+                    // Special handling for half-day tasks
+                    if (workDaysToConsume === 0.5) {
+                        taskEndDateForBar = new Date(tempCurrentDay);
+                        if (tempCurrentDay.getHours() === 0) { // If starting at 00:00, ends at 12:00 PM same day
+                            taskEndDateForBar.setHours(12, 0, 0, 0); 
+                            currentGlobalDateMarker = new Date(taskEndDateForBar); // Update global marker to 12 PM
+                        } else { // If starting at 12:00 PM, ends at 00:00 AM next workday
+                            taskEndDateForBar.setDate(taskEndDateForBar.getDate() + 1); 
+                            taskEndDateForBar.setHours(0,0,0,0);
+                             while (taskEndDateForBar.getDay() === 0 || tempCurrentDay.getDay() === 6) { 
+                                taskEndDateForBar.setDate(taskEndDateForBar.getDate() + 1);
+                            }
+                            currentGlobalDateMarker = new Date(taskEndDateForBar); 
+                        }
+                    } else { // Full day or multiple day tasks
+                        let daysProcessedFloat = 0; 
+                        tempCurrentDay.setHours(0,0,0,0); // Ensure tempCurrentDay starts at 00:00 for calculations
+                        let barStartDate = new Date(tempCurrentDay); // This will be the start of the chart bar
+
+                        while(daysProcessedFloat < workDaysToConsume) {
+                            if (tempCurrentDay.getDay() !== 0 && tempCurrentDay.getDay() !== 6) { // Only count weekdays
+                                if ( (workDaysToConsume - daysProcessedFloat) < 1 && (workDaysToConsume - daysProcessedFloat) > 0) { // Handle remaining fractional days
+                                     daysProcessedFloat += (workDaysToConsume - daysProcessedFloat);
+                                } else {
+                                    daysProcessedFloat += 1;
+                                }
+                            }
+                            if (daysProcessedFloat < workDaysToConsume) { // Only increment day if more work is needed
+                                tempCurrentDay.setDate(tempCurrentDay.getDate() + 1);
+                                 while (tempCurrentDay.getDay() === 0 || tempCurrentDay.getDay() === 6) { // Skip weekends
+                                    tempCurrentDay.setDate(tempCurrentDay.getDate() + 1);
+                                }
+                            }
+                        }
+                        
+                        taskEndDateForBar = new Date(tempCurrentDay);
+                        if (task.duration % 1 !== 0) { // If task duration is X.5, end at 12 PM on the last calculated day
+                            taskEndDateForBar.setHours(12,0,0,0); 
+                            currentGlobalDateMarker = new Date(taskEndDateForBar); // Update global marker to 12 PM
+                        } else { // If task duration is a whole number, end at 00:00 AM the next workday
+                            taskEndDateForBar.setDate(taskEndDateForBar.getDate() + 1); 
+                            taskEndDateForBar.setHours(0,0,0,0);
+                            while (taskEndDateForBar.getDay() === 0 || taskEndDateForBar.getDay() === 6) { 
+                                taskEndDateForBar.setDate(taskEndDateForBar.getDate() + 1);
+                            }
+                            currentGlobalDateMarker = new Date(taskEndDateForBar);
+                        }
+                        taskStartDate = barStartDate; // Set the actual start date for the bar
+                    }
+                    
+                    chartTasks.push({
+                        label: task.label,
+                        data: [new Date(taskStartDate), new Date(taskEndDateForBar)],
+                        backgroundColor: task.color,
+                        borderColor: task.color.replace('0.7', '1'),
+                        phase: task.phase,
+                        objective: task.objective,
+                        duration: task.duration
+                    });
+                }
+
+                const allDates = chartTasks.flatMap(task => task.data);
+                const minDate = new Date(Math.min.apply(null, allDates));
+                const maxDateOverall = new Date(Math.max.apply(null, allDates));
+                minDate.setDate(minDate.getDate() -1); // Give a little buffer before the first task
+
+                ganttChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartTasks.map(t => t.label),
+                        datasets: [{
+                            label: 'Task Duration',
+                            data: chartTasks.map(t => t.data),
+                            backgroundColor: chartTasks.map(t => t.backgroundColor),
+                            borderColor: chartTasks.map(t => t.borderColor),
+                            borderWidth: 1,
+                            barPercentage: 0.7,
+                            categoryPercentage: 0.9,
+                            borderSkipped: false,
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'day',
+                                    tooltipFormat: 'MMM d, yy', 
+                                    displayFormats: { day: 'MMM d' },
+                                    adapters: { date: { locale: 'en-US' } }, 
+                                },
+                                min: minDate.toISOString().split('T')[0],
+                                max: maxDateOverall.toISOString().split('T')[0],
+                                ticks: { font: { size: 10, color: '#334155' }, autoSkip: true, maxTicksLimit: 30 }, /* Reverted tick color */
+                                grid: { color: 'rgba(0, 0, 0, 0.05)' } /* Reverted grid line color */
+                            },
+                            y: {
+                                ticks: { font: { size: 10, color: '#334155' }, autoSkip: false }, /* Reverted tick color */
+                                grid: { display: false }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'white', /* Reverted tooltip background */
+                                titleColor: '#0ea5e9', /* Reverted title color */
+                                bodyColor: '#334155', /* Reverted body text color */
+                                callbacks: {
+                                    title: function(context) {
+                                        const taskIndex = context[0].dataIndex;
+                                        const task = chartTasks[taskIndex]; 
+                                        return `${task.phase}: ${task.label} (${task.duration}d)`;
+                                    },
+                                    label: function(context) {
+                                        const taskIndex = context.dataIndex;
+                                        const task = chartTasks[taskIndex]; 
+                                        const objectiveLines = task.objective.split(' ').reduce((acc, word) => {
+                                            const lastLine = acc[acc.length - 1];
+                                            if (lastLine && lastLine.length + word.length < 60) {
+                                                acc[acc.length - 1] = lastLine + ' ' + word;
+                                            } else { acc.push(word); }
+                                            return acc;
+                                        }, []);
+                                        return [`Objective:`, ...objectiveLines];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function renderFinancialProjectionChart() {
+                if (financialChart) { financialChart.destroy(); }
+                const ctx = document.getElementById('financialProjectionChart').getContext('2d');
+
+                const initialInvestment = 10000;
+                const deploymentDays = 75; // Updated deployment days
+                const dailyOpCost = 5;
+                const revenuePerSubscriberMonthly = 350; 
+                const revenuePerSubscriberDaily = revenuePerSubscriberMonthly / 30.4375; 
+                const subscriberAddInterval = 10; 
+                const totalDays = 1095; // 3 years
+
+                let cumulativeNet = -initialInvestment;
+                let cumulativeOpCosts = 0;
+                let cumulativeRevenue = 0;
+                let numSubscribers = 0;
+                
+                const labels = [];
+                const dataPoints = [];
+                
+                labels.push("Start"); 
+                dataPoints.push(-initialInvestment);
+
+                for (let d = 1; d <= totalDays; d++) { 
+                    let dailyCostsForThisDay = 0;
+                    let dailyRevenueForThisDay = 0;
+
+                    if (d > deploymentDays) { 
+                        dailyCostsForThisDay = dailyOpCost;
+                        cumulativeOpCosts += dailyCostsForThisDay;
+
+                        const operationalDay = d - deploymentDays; 
+                        if (operationalDay > 0 && operationalDay % subscriberAddInterval === 0) {
+                            numSubscribers++;
+                        }
+                         dailyRevenueForThisDay = numSubscribers * revenuePerSubscriberDaily;
+                         cumulativeRevenue += dailyRevenueForThisDay;
+                    }
+                    
+                    cumulativeNet = cumulativeRevenue - (initialInvestment + cumulativeOpCosts);
+
+                    if (d % Math.round(30.4375) === 0 || d === totalDays) {
+                        const month = Math.floor(d / 30.4375);
+                        if (month <= 36 && month > 0) { 
+                           labels.push(`Month ${month}`);
+                           dataPoints.push(cumulativeNet);
+                        }
+                    }
+                }
+
+
+                financialChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Cumulative Net Financial Position ($)',
+                            data: dataPoints,
+                            borderColor: '#059669', /* Emerald-600 for line */
+                            backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                            tension: 0.1,
+                            fill: true,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#059669',
+                            pointBorderColor: '#ffffff', /* Reverted point border */
+                            pointBorderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: false, 
+                                title: {
+                                    display: true,
+                                    text: 'Cumulative Net ($)',
+                                    color: '#334155' /* Reverted title color */
+                                },
+                                ticks: {
+                                    color: '#334155', /* Reverted tick color */
+                                    callback: function(value, index, values) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)' /* Reverted grid line color */
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Time (Months)',
+                                    color: '#334155' /* Reverted title color */
+                                },
+                                ticks: {
+                                    color: '#334155' /* Reverted tick color */
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)' /* Reverted grid line color */
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                backgroundColor: 'white', /* Reverted tooltip background */
+                                titleColor: '#0ea5e9', /* Reverted title color */
+                                bodyColor: '#334155', /* Reverted body text color */
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += '$' + context.parsed.y.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Call render functions when the DOM is loaded and on window resize
+            renderGanttChart();
+            renderFinancialProjectionChart();
+            window.addEventListener('resize', () => {
+                renderGanttChart();
+                renderFinancialProjectionChart();
+            });
+        });
+    </script>
+
+</body>
+</html>
